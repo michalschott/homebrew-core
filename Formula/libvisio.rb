@@ -7,16 +7,17 @@ class Libvisio < Formula
 
   bottle do
     cellar :any
+    sha256 "f2452ad2cffef7398c26285df513e2d38de8d1f6f12c5443e12f79787a8f2fce" => :mojave
     sha256 "9c0a1efadd14b528b227c78e156ca1bb73fa7f3bd17ae4a5be8ec393a6ff2109" => :high_sierra
     sha256 "ca50d80acd651fc9ed48dbe8849f9cb9b9746eadd4d7f73fb5f402ed8a3d1a7d" => :sierra
     sha256 "c2132d94aceadaa37f518681b517e656b42ad6134476cc2b76862c4ec41c55a4" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "cppunit" => :build
+  depends_on "pkg-config" => :build
   depends_on "boost"
-  depends_on "librevenge"
   depends_on "icu4c"
+  depends_on "librevenge"
 
   def install
     # Needed for Boost 1.59.0 compatibility.

@@ -7,31 +7,30 @@ class Pdf2htmlex < Formula
   head "https://github.com/coolwanglu/pdf2htmlEX.git"
 
   bottle do
+    sha256 "44c53a6568f7ccf89f3c2ee6ecb9b68e852b98ac3e8aac394815b03a42bbc07d" => :mojave
     sha256 "316df8e38b0533e5c7ebbd3b120fe4e5d2957f7d7de92ccc0dbe75c72d1285b6" => :high_sierra
     sha256 "e02628e81215b1e9fea902f9b353e6f8ea93f1eda7e385f886cee95e39627d20" => :sierra
     sha256 "5c72b64128d75ce84c0158f6c90c8e710c299de71f593a5b15868c006c5396fb" => :el_capitan
   end
 
-  depends_on :macos => :lion
+  depends_on "autoconf" => :build # for fontforge
+  depends_on "automake" => :build # for fontforge
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
+  depends_on "cairo" # for fontforge
+  depends_on "freetype" # for fontforge
+  depends_on "gettext" # for fontforge
+  depends_on "giflib" # for fontforge
+  depends_on "glib" # for fontforge
   depends_on "gnu-getopt"
+  depends_on "jpeg" # for fontforge
+  depends_on "libpng" # for fontforge
+  depends_on "libtiff" # for fontforge
+  depends_on "libtool" # for fontforge
+  depends_on :macos => :lion
   depends_on "openjpeg" # for poppler
+  depends_on "pango" # for fontforge
   depends_on "ttfautohint"
-
-  # Fontforge dependencies
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "libtool"
-  depends_on "cairo"
-  depends_on "freetype"
-  depends_on "gettext"
-  depends_on "giflib"
-  depends_on "glib"
-  depends_on "jpeg"
-  depends_on "libpng"
-  depends_on "libtiff"
-  depends_on "pango"
 
   # Pdf2htmlex use an outdated, customised Fontforge installation.
   # See https://github.com/coolwanglu/pdf2htmlEX/wiki/Building

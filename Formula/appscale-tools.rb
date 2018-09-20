@@ -7,15 +7,16 @@ class AppscaleTools < Formula
 
   bottle do
     cellar :any
+    sha256 "4f41b03465b1dea26010f87ca4aae2685b58d50cc1139b17aed9b74da6e75fc7" => :mojave
     sha256 "09504e42c3fa49bef72caec812e751b662a64bc9c82b8e6489fee22eeda5f5f2" => :high_sierra
     sha256 "99ffa7564f5c791bff75392877e57c8ba513c95ab7ec98f18b3b68096faacf04" => :sierra
     sha256 "fb7096134ec7fd4172c3906190f123f21d8cf9c336729c07271f792e926997d3" => :el_capitan
   end
 
-  depends_on "python@2"
   depends_on "libyaml"
-  depends_on "ssh-copy-id"
   depends_on "openssl"
+  depends_on "python@2"
+  depends_on "ssh-copy-id"
 
   resource "retrying" do
     url "https://files.pythonhosted.org/packages/44/ef/beae4b4ef80902f22e3af073397f079c96969c69b2c7d52a57ea9ae61c9d/retrying-1.3.3.tar.gz"

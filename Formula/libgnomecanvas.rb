@@ -7,17 +7,18 @@ class Libgnomecanvas < Formula
 
   bottle do
     cellar :any
+    sha256 "45cf95b18206ce16aecc6d642d7fe453b3f03a2dd50a2fdfcfb574cf3e428239" => :mojave
     sha256 "91610f96cef0504b4be9fb6355cac9f628867cc3bb6b8833aaad48c583f47dea" => :high_sierra
     sha256 "ed520a02e7ea3cd0bcd48dba1ed262d89921bd5f5518c1d672f43a833c6bd758" => :sierra
     sha256 "b1a71d30655833a45b35af8770181fbe3f5df7e66d1b08f491900d5e875acfef" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "intltool" => :build
-  depends_on "libglade"
-  depends_on "libart"
+  depends_on "pkg-config" => :build
   depends_on "gettext"
   depends_on "gtk+"
+  depends_on "libart"
+  depends_on "libglade"
 
   def install
     system "./configure", "--disable-dependency-tracking",

@@ -1,20 +1,18 @@
 class Osquery < Formula
   desc "SQL powered operating system instrumentation and analytics"
   homepage "https://osquery.io"
-  url "https://github.com/facebook/osquery/archive/3.2.6.tar.gz"
-  sha256 "54d49f00eae5907f0f0c065b0ea01ffc48a1c977366d9b67d0aa3913f387d7bd"
-  revision 1
+  url "https://github.com/facebook/osquery/archive/3.3.0.tar.gz"
+  sha256 "b633b41bd9ec7a8569eb03060cc22dd53a36d3ba4ca7fb66a976d7f9f800bf52"
 
   bottle do
     cellar :any
-    sha256 "67ae5a43c70f9ace494bad1588183f281e1afe8eb4bd499e635e0c9f751e3d48" => :high_sierra
-    sha256 "6cb10ed37ecfc87181166f1862c3639910375e7abdbe187f739e05df9fa3c203" => :sierra
+    sha256 "6a72b32baee92352531bf8b2b65384affdc66217c68688859b65d094d2630621" => :mojave
+    sha256 "8aa49f8ab62b8132333ade19ae7c07fac43ea01f3e02592b64fb5caea9a695b0" => :high_sierra
+    sha256 "d1d464d11894f3dd91946aa03d0178baf6fa5b9cd2623d6544e42d1c295e0d5a" => :sierra
   end
 
   fails_with :gcc => "6"
 
-  # osquery only supports macOS 10.12 and above. Do not remove this.
-  depends_on :macos => :sierra
   depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "python@2" => :build
@@ -24,15 +22,18 @@ class Osquery < Formula
   depends_on "glog"
   depends_on "libarchive"
   depends_on "libmagic"
-  depends_on "lldpd"
   depends_on "librdkafka"
+  depends_on "lldpd"
+  # osquery only supports macOS 10.12 and above. Do not remove this.
+  depends_on :macos => :sierra
   depends_on "openssl"
   depends_on "rapidjson"
   depends_on "rocksdb"
   depends_on "sleuthkit"
+  depends_on "ssdeep"
   depends_on "thrift"
-  depends_on "yara"
   depends_on "xz"
+  depends_on "yara"
   depends_on "zstd"
 
   resource "MarkupSafe" do
@@ -80,6 +81,10 @@ class Osquery < Formula
     # Skip test and benchmarking.
     ENV["SKIP_TESTS"] = "1"
     ENV["SKIP_DEPS"] = "1"
+
+    # Skip SMART drive tables.
+    # SMART requires a dependency that isn't packaged by brew.
+    ENV["SKIP_SMART"] = "1"
 
     # Link dynamically against brew-installed libraries.
     ENV["BUILD_LINK_SHARED"] = "1"

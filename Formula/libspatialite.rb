@@ -17,6 +17,7 @@ class Libspatialite < Formula
 
   bottle do
     cellar :any
+    sha256 "f1aaaa0bec4ec6b2c636139e391b2fc17e71e9ccad5588aba9362cb89bbb4729" => :mojave
     sha256 "2a41b0baab67ec8b35f3c68b392439907a1b003a84437b8437b3ca3ecdcf35f4" => :high_sierra
     sha256 "4b73791b59c7766a4e20d9ca77502d2866f7d07fb7aeba660bf38e41077ba60e" => :sierra
     sha256 "eff5f3de6139cfe0adff6ec2fe306c7f11ee1f7b9195089d514902b11b0675d0" => :el_capitan
@@ -29,19 +30,15 @@ class Libspatialite < Formula
     depends_on "libtool" => :build
   end
 
-  option "without-freexl", "Build without support for reading Excel files"
-  option "without-libxml2", "Disable support for xml parsing (parsing needed by spatialite-gui)"
-  option "without-geopackage", "Build without OGC GeoPackage support"
-
   depends_on "pkg-config" => :build
-  depends_on "proj"
+  depends_on "freexl"
   depends_on "geos"
+  depends_on "libxml2"
+  depends_on "proj"
   # Needs SQLite > 3.7.3 which rules out system SQLite on Snow Leopard and
   # below. Also needs dynamic extension support which rules out system SQLite
   # on Lion. Finally, RTree index support is required as well.
   depends_on "sqlite"
-  depends_on "libxml2" => :recommended
-  depends_on "freexl" => :recommended
 
   def install
     system "autoreconf", "-fi" if build.head?
@@ -65,9 +62,6 @@ class Libspatialite < Formula
       --with-sysroot=#{HOMEBREW_PREFIX}
       --enable-geocallbacks
     ]
-    args << "--enable-freexl=no" if build.without? "freexl"
-    args << "--enable-libxml2=no" if build.without? "libxml2"
-    args << "--enable-geopackage=no" if build.without? "geopackage"
 
     system "./configure", *args
     system "make", "install"

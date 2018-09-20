@@ -3,18 +3,19 @@ class Gloox < Formula
   homepage "https://camaya.net/gloox/"
   url "https://camaya.net/download/gloox-1.0.21.tar.bz2"
   sha256 "3c13155c10e3182a1a57779134cc524efb3657545849534b2831fae0e2c3a7cc"
+  revision 1
 
   bottle do
     cellar :any
-    rebuild 1
-    sha256 "d8377965f6bde00d603fe9ee86a4c7509baae004055c7b5e956a49428ecc85c9" => :high_sierra
-    sha256 "7e7d052c6c26c7637607c464dd63819462a95dfbb3aa4efe59be9dd0f7ab55c1" => :sierra
-    sha256 "3023d30363b888f46408b8d9d79c38e2a96cfeb4dd071edb26c262b78d532bb5" => :el_capitan
+    sha256 "76e08ce8f5e51168e8d3e3ad50b46ec0564c1f8c73b51a0a02369f528d1b366f" => :mojave
+    sha256 "3f72253357c59741e8a2bee9898b526950394acf5c6482ae15fea664abc26368" => :high_sierra
+    sha256 "f0812d2040520df39193a65c7edbca2b49092f409a495a7e74f7619a86f58597" => :sierra
+    sha256 "f9e1d2ae48aa08d5c223aa4d85cf553205e400f9f68207f0107b5a752db01f22" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
+  depends_on "libidn"
   depends_on "openssl"
-  depends_on "libidn" => :optional
 
   def install
     system "./configure", "--prefix=#{prefix}",

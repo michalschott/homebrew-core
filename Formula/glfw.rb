@@ -7,6 +7,7 @@ class Glfw < Formula
 
   bottle do
     cellar :any
+    sha256 "04b6332acfa686339994bd5b8409a11601bdf03c70ba611792e3575eec638ac9" => :mojave
     sha256 "dd4e0a7ec81510315f7f3a443c09f682ff95b6edd59f1f1e507d656aabe86b41" => :high_sierra
     sha256 "c19bbe78ab9d7d376b2cd265389348e4ad4572b9881bb1048b05d3eb4bc67762" => :sierra
     sha256 "874e364604c386252a1d639f24c8d2333bc4715c67acd77109c291d724509538" => :el_capitan
@@ -14,15 +15,10 @@ class Glfw < Formula
   end
 
   option "without-shared-library", "Build static library only (defaults to building dylib only)"
-  option "with-examples", "Build examples"
-  option "with-test", "Build test programs"
 
   depends_on "cmake" => :build
 
-  deprecated_option "build-examples" => "with-examples"
   deprecated_option "static" => "without-shared-library"
-  deprecated_option "build-tests" => "with-test"
-  deprecated_option "with-tests" => "with-test"
 
   def install
     args = std_cmake_args + %w[
@@ -30,14 +26,9 @@ class Glfw < Formula
       -DGLFW_USE_MENUBAR=TRUE
     ]
     args << "-DBUILD_SHARED_LIBS=TRUE" if build.with? "shared-library"
-    args << "-DGLFW_BUILD_EXAMPLES=TRUE" if build.with? "examples"
-    args << "-DGLFW_BUILD_TESTS=TRUE" if build.with? "test"
-    args << "."
 
-    system "cmake", *args
+    system "cmake", *args, "."
     system "make", "install"
-    libexec.install Dir["examples/*"] if build.with? "examples"
-    libexec.install Dir["tests/*"] if build.with? "test"
   end
 
   test do

@@ -1,12 +1,13 @@
 class MongodbAT36 < Formula
   desc "High-performance, schema-free, document-oriented database"
   homepage "https://www.mongodb.org/"
-  url "https://fastdl.mongodb.org/src/mongodb-src-r3.6.6.tar.gz"
-  sha256 "e3b9e30941f314d0b1d89f85af3b1258aa2f72a9df21e44cf4aa08faf262e406"
+  url "https://fastdl.mongodb.org/src/mongodb-src-r3.6.8.tar.gz"
+  sha256 "cbb6bedd8963db2abf87cdb6dcceffaa5ee86729d19f4dcbeefb6e0dba0a2d7d"
 
   bottle do
-    sha256 "8f1df3b71a349dacdf8354ff7bda2e90ed658a8800c48404e81c85791725f4f2" => :high_sierra
-    sha256 "631654b0c18c68507113ab7905508504f384221f638fec89510d546fc79b1b71" => :sierra
+    sha256 "6d18c5c38df9bae6332aff5e5fb791f0e48f713c2827250d54f9968f3da67ed5" => :mojave
+    sha256 "366c9f61aab97ad87d6ff1f037815105be1586c5ab55b937d49bdeff2fb51765" => :high_sierra
+    sha256 "774828c13e943691365149fb3bea7e638cca5621d0584e9853a85c5566f46588" => :sierra
   end
 
   keg_only :versioned_formula
@@ -14,10 +15,10 @@ class MongodbAT36 < Formula
   option "with-boost", "Compile using installed boost, not the version shipped with mongodb"
   option "with-sasl", "Compile with SASL support"
 
-  depends_on :xcode => ["8.3.2", :build]
   depends_on "go" => :build
   depends_on "pkg-config" => :build
   depends_on "scons" => :build
+  depends_on :xcode => ["8.3.2", :build]
   depends_on :macos => :mountain_lion
   depends_on "python@2"
   depends_on "openssl" => :recommended
@@ -29,13 +30,13 @@ class MongodbAT36 < Formula
   end
 
   resource "PyYAML" do
-    url "https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"
-    sha256 "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab"
+    url "https://files.pythonhosted.org/packages/9e/a3/1d13970c3f36777c583f136c136f804d70f500168edc1edea6daa7200769/PyYAML-3.13.tar.gz"
+    sha256 "3ef3092145e9b70e3ddd2c7ad59bdd0252a94dfe3949721633e41344de00a6bf"
   end
 
   resource "typing" do
-    url "https://files.pythonhosted.org/packages/ec/cc/28444132a25c113149cec54618abc909596f0b272a74c55bab9593f8876c/typing-3.6.4.tar.gz"
-    sha256 "d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2"
+    url "https://files.pythonhosted.org/packages/bf/9b/2bf84e841575b633d8d91ad923e198a415e3901f228715524689495b4317/typing-3.6.6.tar.gz"
+    sha256 "4027c5f6127a6267a435201981ba156de91ad0d1d98e9ddc2aa173453453492d"
   end
 
   needs :cxx11

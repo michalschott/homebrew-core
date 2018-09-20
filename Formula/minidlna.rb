@@ -7,6 +7,7 @@ class Minidlna < Formula
 
   bottle do
     cellar :any
+    sha256 "e47addf7d21436e3b534b14024271d1d3355818f2e11a04da53a924f2acfe8e3" => :mojave
     sha256 "ed1b022aaea8beed91a26b9907c8253da9c5c441fa52482ae0255571cd1744ad" => :high_sierra
     sha256 "5145b3bae1ebb4add544bc8877668a5cea2e80a380a5a0beaba94a6e88cbf33c" => :sierra
     sha256 "16fb753050582f030bcc16de31ccac3faa74f5ada3d1bed4d17895dd8628f772" => :el_capitan
@@ -16,18 +17,18 @@ class Minidlna < Formula
     url "https://git.code.sf.net/p/minidlna/git.git"
     depends_on "autoconf" => :build
     depends_on "automake" => :build
-    depends_on "libtool" => :build
     depends_on "gettext" => :build
+    depends_on "libtool" => :build
   end
 
-  depends_on "libexif"
-  depends_on "jpeg"
-  depends_on "libid3tag"
+  depends_on "ffmpeg"
   depends_on "flac"
+  depends_on "jpeg"
+  depends_on "libexif"
+  depends_on "libid3tag"
   depends_on "libogg"
   depends_on "libvorbis"
   depends_on "sqlite"
-  depends_on "ffmpeg"
 
   def install
     system "./autogen.sh" if build.head?

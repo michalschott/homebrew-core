@@ -6,6 +6,7 @@ class Ffmpeg < Formula
   head "https://github.com/FFmpeg/FFmpeg.git"
 
   bottle do
+    sha256 "83f8f5c5b79b7bbe6e13ab918f4bd8effb1eba2e7091a5776eeb31db84e74102" => :mojave
     sha256 "5522a58020c3b5c68e5628818ee746822fe38747810c29b4aa865f4fe2803d57" => :high_sierra
     sha256 "98cdb186d1dd9c9eb2149b5d5d5c15dc13cecb58fed25232abcbeeb1236c92b8" => :sierra
     sha256 "4ef0ba0bd512fff69004bb33417a8516d1d8e9dc5e3eb05ea9f2ac15f557cdb2" => :el_capitan
@@ -81,6 +82,7 @@ class Ffmpeg < Formula
   depends_on "sdl2" => :optional
   depends_on "snappy" => :optional
   depends_on "speex" => :optional
+  depends_on "srt" => :optional
   depends_on "tesseract" => :optional
   depends_on "theora" => :optional
   depends_on "two-lame" => :optional
@@ -90,7 +92,6 @@ class Ffmpeg < Formula
   depends_on "xz" => :optional
   depends_on "zeromq" => :optional
   depends_on "zimg" => :optional
-  depends_on "srt" => :optional
 
   def install
     args = %W[

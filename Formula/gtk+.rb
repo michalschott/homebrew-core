@@ -9,6 +9,7 @@ class Gtkx < Formula
   end
 
   bottle do
+    sha256 "1cf12a33a310ade188f96a927d2e916eab0b94785e2c4c98e400a20caa71e213" => :mojave
     sha256 "f1e4965a3aa5655e628e46c1ffd9421ec1abf9ba4f0757be1ce7b3a8009fec58" => :high_sierra
     sha256 "77275da434ff045cab02f69e3847b983510bd2f45e022b0af0adb620c6a6821a" => :sierra
     sha256 "f6117acd04e65a2ec378ad21b8b6519dc0d048f24b398456c09474af74ec2c11" => :el_capitan
@@ -17,19 +18,19 @@ class Gtkx < Formula
   head do
     url "https://gitlab.gnome.org/GNOME/gtk.git", :branch => "gtk-2-24"
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
-    depends_on "libtool" => :build
+    depends_on "automake" => :build
     depends_on "gtk-doc" => :build
+    depends_on "libtool" => :build
   end
 
   depends_on "gobject-introspection" => :build
   depends_on "pkg-config" => :build
-  depends_on "gdk-pixbuf"
-  depends_on "jasper" => :optional
   depends_on "atk"
-  depends_on "pango"
+  depends_on "gdk-pixbuf"
   depends_on "hicolor-icon-theme"
+  depends_on "pango"
+  depends_on "jasper" => :optional
 
   # Patch to allow Eiffel Studio to run in Cocoa / non-X11 mode, as well as Freeciv's freeciv-gtk2 client
   # See:

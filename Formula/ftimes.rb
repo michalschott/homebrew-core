@@ -6,6 +6,7 @@ class Ftimes < Formula
   revision 1
 
   bottle do
+    sha256 "c1bb56c6edc25e981dcb14f8463a0d5d75f0c59dbf0715f71bd62a7102d46612" => :mojave
     sha256 "11d86838a177c545f13e0e979a370c561ffab8a1c677259d28203501f0243864" => :high_sierra
     sha256 "cbca23c29665bef95b9245e329cfafbb33f5dcc7fa1b60c1ff9e84498bafff91" => :sierra
     sha256 "7c782808f555c9f8afa2bca44c064f9898bcf3a66a14e7b859124f0afc85c97e" => :el_capitan
@@ -14,8 +15,8 @@ class Ftimes < Formula
     sha256 "fbe09e2f091d3b828a2f3802674203f4f72b6e0136fe6f442bf8313234be5373" => :mountain_lion
   end
 
-  depends_on "pcre"
   depends_on "openssl"
+  depends_on "pcre"
 
   def install
     system "./configure", "--prefix=#{prefix}",

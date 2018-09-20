@@ -6,6 +6,7 @@ class Zookeeper < Formula
 
   bottle do
     cellar :any
+    sha256 "ea103724c24f044e7cbe93c1718ab92da96949c497b63e7034a4c3d77c77de34" => :mojave
     sha256 "55170e3c70f9ccfe0f8a7a4f34c11d9ed96122adfb6946e223dab0ab31f129d5" => :high_sierra
     sha256 "7f9b53a4c01bf1b7af68d7b609ded5dec3c9ae91a3f0ef86a6fbe3f978d9160c" => :sierra
     sha256 "b8cb0059b877aa10a8da94bdbc01ea958b67115e085bf741b0c293b849ac4955" => :el_capitan
@@ -15,18 +16,11 @@ class Zookeeper < Formula
     url "https://svn.apache.org/repos/asf/zookeeper/trunk"
 
     depends_on "ant" => :build
-    depends_on "cppunit" => :build
-    depends_on "libtool" => :build
     depends_on "autoconf" => :build
     depends_on "automake" => :build
+    depends_on "cppunit" => :build
+    depends_on "libtool" => :build
   end
-
-  option "with-perl", "Build Perl bindings"
-
-  deprecated_option "perl" => "with-perl"
-  deprecated_option "with-python" => "with-python@2"
-
-  depends_on "python@2" => :optional
 
   def shim_script(target)
     <<~EOS
@@ -72,22 +66,6 @@ class Zookeeper < Formula
                             "--prefix=#{prefix}",
                             "--without-cppunit"
       system "make", "install"
-    end
-
-    if build.with? "python@2"
-      cd "src/contrib/zkpython" do
-        system "python", "src/python/setup.py", "build"
-        system "python", "src/python/setup.py", "install", "--prefix=#{prefix}"
-      end
-    end
-
-    if build.with? "perl"
-      cd "src/contrib/zkperl" do
-        system "perl", "Makefile.PL", "PREFIX=#{prefix}",
-                                      "--zookeeper-include=#{include}",
-                                      "--zookeeper-lib=#{lib}"
-        system "make", "install"
-      end
     end
 
     rm_f Dir["bin/*.cmd"]

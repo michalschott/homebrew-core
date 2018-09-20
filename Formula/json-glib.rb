@@ -1,19 +1,20 @@
 class JsonGlib < Formula
   desc "Library for JSON, based on GLib"
   homepage "https://wiki.gnome.org/Projects/JsonGlib"
-  url "https://download.gnome.org/sources/json-glib/1.4/json-glib-1.4.2.tar.xz"
-  sha256 "2d7709a44749c7318599a6829322e081915bdc73f5be5045882ed120bb686dc8"
+  url "https://download.gnome.org/sources/json-glib/1.4/json-glib-1.4.4.tar.xz"
+  sha256 "720c5f4379513dc11fd97dc75336eb0c0d3338c53128044d9fabec4374f4bc47"
 
   bottle do
-    sha256 "d27d9aaeadd8072a2eeb91984b2cf9b8e13b7c6cbc2cc1e4debe4738bce90f36" => :high_sierra
-    sha256 "ef55b4676e0ef1e3dcde3fd642bc7cb6da0d091921720281b4b3400e169cbffa" => :sierra
-    sha256 "f5baf172b136c33fb8fa7b9e8e7e923cc0f9eabf6012f8765ff665b4380c29c8" => :el_capitan
+    sha256 "5955c4e1bb25115e61252ef5b11e6a4c7e2211b4ff71c56cae5a76c6a73c5064" => :mojave
+    sha256 "896582a3d39376e8ae3ed1093344f5de02505d81d4639d6256db8d4f292a24ce" => :high_sierra
+    sha256 "ac347ffca088d57e22296de1b717dd0d21086e09b04d20919f530c3a20f4a3dd" => :sierra
+    sha256 "19690e86594be958118eddeb8a50cfd8175c00e122bc83120cfefd9914dd1eea" => :el_capitan
   end
 
   depends_on "gobject-introspection" => :build
-  depends_on "pkg-config" => :build
   depends_on "meson-internal" => :build
   depends_on "ninja" => :build
+  depends_on "pkg-config" => :build
   depends_on "glib"
 
   patch :DATA

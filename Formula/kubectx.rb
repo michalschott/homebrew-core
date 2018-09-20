@@ -1,8 +1,8 @@
 class Kubectx < Formula
   desc "Tool that can switch between kubectl contexts easily and create aliases"
   homepage "https://github.com/ahmetb/kubectx"
-  url "https://github.com/ahmetb/kubectx/archive/v0.5.1.tar.gz"
-  sha256 "05bdd786a91d1b16c6792c2d68029b4400f1da59b834206e5e2e61255d1cfe64"
+  url "https://github.com/ahmetb/kubectx/archive/v0.6.1.tar.gz"
+  sha256 "0092c1e42ee4aff2d994296e541d90806419b8b3272c80c2c3e97c16db3d643a"
   head "https://github.com/ahmetb/kubectx.git"
 
   bottle :unneeded
@@ -24,7 +24,7 @@ class Kubectx < Formula
   end
 
   test do
-    assert_match "USAGE:", shell_output("#{bin}/kubectx -h 2>&1", 1)
-    assert_match "USAGE:", shell_output("#{bin}/kubens -h 2>&1", 1)
+    assert_match "USAGE:", shell_output("#{bin}/kubectx -h 2>&1")
+    assert_match "USAGE:", shell_output("#{bin}/kubens -h 2>&1")
   end
 end

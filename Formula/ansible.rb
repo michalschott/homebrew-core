@@ -3,15 +3,16 @@ class Ansible < Formula
 
   desc "Automate deployment, configuration, and upgrading"
   homepage "https://www.ansible.com/"
-  url "https://releases.ansible.com/ansible/ansible-2.6.2.tar.gz"
-  sha256 "747e4cca09c10833ffe3a7c53af310d2d387bd4f499ec6e1bde60662606aaff8"
+  url "https://releases.ansible.com/ansible/ansible-2.6.4.tar.gz"
+  sha256 "e06b795372fd7a6d0b46b8f105497fb637fbd323f5aec1d8e51fd60cd98047e1"
   head "https://github.com/ansible/ansible.git", :branch => "devel"
 
   bottle do
     cellar :any
-    sha256 "1e3c1a39bd257f0c7289eda70cf7604cd11c8be845ecb49a5c1d027cc756f883" => :high_sierra
-    sha256 "28742f0b2990c41ef8c4506e2a7a7751da18af8b958a7708e8053e063ef8a64b" => :sierra
-    sha256 "4c64ab23384aa64862b7a5ad7e3c56002364ff5fe373f138b5005a9f09407ef4" => :el_capitan
+    sha256 "1782afe3669579e885d7cacf2dc28afc931b3d6faaf631e087be36a121d4cb4d" => :mojave
+    sha256 "640e38590fbc4a919a14da2741f51e7b90c1c0abc3b45c58214ccc5573f44ae2" => :high_sierra
+    sha256 "3889b6afe0d7e85ed4f83b468d1b566ba0ca3469a672e53d6235b0c012adf7f5" => :sierra
+    sha256 "048136679fbf4883e2aadad273f678e3374bba52c2edd675d9fefbbcd72fccdd" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -54,8 +55,8 @@ class Ansible < Formula
 
   ### extras for requests[security]
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/fd/2c/a9e42f90bda9ebadf4790ed699e44edd630614f1590eb42e11de64a0b9c1/cryptography-2.2.1.tar.gz"
-    sha256 "dddad9d322a3f0867009ff9f25477b8f7c0bdbedf143704b384c9472f11cb2d3"
+    url "https://files.pythonhosted.org/packages/22/21/233e38f74188db94e8451ef6385754a98f3cad9b59bedf3a8e8b14988be4/cryptography-2.3.1.tar.gz"
+    sha256 "8d10113ca826a4c29d5b85b2c4e045ffa8bad74fb525ee0eceb1d38d4c70dfd6"
   end
 
   resource "idna" do

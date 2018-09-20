@@ -2,14 +2,15 @@ class Vegeta < Formula
   desc "HTTP load testing tool and library"
   homepage "https://github.com/tsenart/vegeta"
   url "https://github.com/tsenart/vegeta.git",
-      :tag => "cli/v8.1.1",
-      :revision => "6f0659435229e0adcbddf1cbbdf9c0adf95f9081"
+      :tag => "cli/v11.0.0",
+      :revision => "6eef4b1ad4cb4a0318f031d517eeb232473d7955"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "52401d4882d98aef57d695cb3481a6158e8b0ddfc8bc192ff6029fc9a3f678dd" => :high_sierra
-    sha256 "25c88db731fb87d4681a314b3b87cc92c5862c0f9bfb2f29c00e536b24d38f16" => :sierra
-    sha256 "b2d85acb18a407655a1472a12569af65880c8ed1746669fc30c5b309f8e15298" => :el_capitan
+    sha256 "5a6c09a58457da6d6de746607edb4d763c23db3a862172583d8693ef597cd776" => :mojave
+    sha256 "73d90510f49a30fcb6cd3740e57ed13f1f178b3881d574bb26c15b9caf980cdd" => :high_sierra
+    sha256 "53eacf1e201b33df7fba7c6cd659b145e747ea1008a1f9e045aec79cf4ef3404" => :sierra
+    sha256 "e28238ab34c4899bc646c8ab9c1ff1fb0976b379f527bf30ed3aa1fae2d54e00" => :el_capitan
   end
 
   depends_on "dep" => :build

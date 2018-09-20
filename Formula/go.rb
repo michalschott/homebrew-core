@@ -3,29 +3,22 @@ class Go < Formula
   homepage "https://golang.org"
 
   stable do
-    url "https://dl.google.com/go/go1.10.3.src.tar.gz"
-    mirror "https://fossies.org/linux/misc/go1.10.3.src.tar.gz"
-    sha256 "567b1cc66c9704d1c019c50bef946272e911ec6baf244310f87f4e678be155f2"
+    url "https://dl.google.com/go/go1.11.src.tar.gz"
+    mirror "https://fossies.org/linux/misc/go1.11.src.tar.gz"
+    sha256 "afc1e12f5fe49a471e3aae7d906c73e9d5b1fdd36d52d72652dde8f6250152fb"
 
     go_version = version.to_s.split(".")[0..1].join(".")
     resource "gotools" do
       url "https://go.googlesource.com/tools.git",
           :branch => "release-branch.go#{go_version}"
     end
-
-    # Backports the following commit from 1.10/1.11:
-    # https://github.com/golang/go/commit/1a92cdbfc10e0c66f2e015264a39159c055a5c15
-    patch do
-      url "https://github.com/golang/go/commit/1a92cdbfc10e0c66f2e015264a39159c055a5c15.patch?full_index=1"
-      sha256 "9b879e3e759d56093ca7660305c3e4f8aee8acdd87126dc10985360395704139"
-    end
   end
 
   bottle do
-    sha256 "6aca532a0eaee1acb64e8b458a99b7b27af34c89685fb648c1e6065a1385f24e" => :mojave
-    sha256 "4229e1addd787d3fc372bc17b57766ccba605f935d54d413ae4b8499390cb56f" => :high_sierra
-    sha256 "3e27ed7f24bbf3bfb768905d92a33a8bcfb2cff6bfb28eb65c53aaf55dee8f8e" => :sierra
-    sha256 "e1fbcbeca4133490bc7b4b34247612f2b4b4a58e5c195d8e2291d14dcbd6e65b" => :el_capitan
+    sha256 "46c54a3db461ce4ab9450991a84859c5d3e7bfc908ac1e99cc5b6dff0dea0940" => :mojave
+    sha256 "d2dfd9846bc03498dd69c01eaccc0a3018a66d00864d7433d70f07645aac6a40" => :high_sierra
+    sha256 "658842f7da7e1e922b4242f14df5dcd7c7b42055d36d3b04997be4b2f00a6c75" => :sierra
+    sha256 "ebce66f5a06cdb481241bf1952792b1569a9fee0c5ea5747fc5a13d4f1e87cbc" => :el_capitan
   end
 
   head do
@@ -39,7 +32,7 @@ class Go < Formula
   option "without-cgo", "Build without cgo (also disables race detector)"
   option "without-race", "Build without race detector"
 
-  depends_on :macos => :mountain_lion
+  depends_on :macos => :yosemite
 
   # Don't update this unless this version cannot bootstrap the new version.
   resource "gobootstrap" do

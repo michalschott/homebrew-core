@@ -6,6 +6,7 @@ class Fontforge < Formula
   revision 3
 
   bottle do
+    sha256 "dcac27239080e9920c17216802485a9fe5fe589a63517087972303e9d008cec7" => :mojave
     sha256 "06dbc9a8d4bc58b2097d455074118db2b0c9063d6e341e8f36034f7dbb896aec" => :high_sierra
     sha256 "c1c341cc9e10bb504fee8b8cdcb827ae1ee32db9a2c723743a79e39df32da8fd" => :sierra
     sha256 "ec69ac98f88c91f84f83d929310c6b7bdb4ccdc731e2603d2402dbdccd54a6d2" => :el_capitan
@@ -17,18 +18,18 @@ class Fontforge < Formula
   deprecated_option "with-gif" => "with-giflib"
 
   depends_on "pkg-config" => :build
-  depends_on "libtool"
-  depends_on "gettext"
-  depends_on "pango"
   depends_on "cairo"
   depends_on "fontconfig"
+  depends_on "gettext"
   depends_on "libpng"
+  depends_on "libtool"
+  depends_on "pango"
+  depends_on "python@2"
   depends_on "jpeg" => :recommended
   depends_on "libtiff" => :recommended
   depends_on "giflib" => :optional
   depends_on "libspiro" => :optional
   depends_on "libuninameslist" => :optional
-  depends_on "python@2"
 
   # Remove for > 20170731
   # Fix "fatal error: 'mem.h' file not found" for --with-extra-tools
@@ -80,7 +81,7 @@ class Fontforge < Formula
     FontForge.app can be downloaded directly from the website:
       https://fontforge.github.io
 
-    Alternatively, install with Homebrew-Cask:
+    Alternatively, install with Homebrew Cask:
       brew cask install fontforge
   EOS
   end

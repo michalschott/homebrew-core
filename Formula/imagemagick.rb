@@ -4,15 +4,17 @@ class Imagemagick < Formula
   # Please always keep the Homebrew mirror as the primary URL as the
   # ImageMagick site removes tarballs regularly which means we get issues
   # unnecessarily and older versions of the formula are broken.
-  url "https://dl.bintray.com/homebrew/mirror/imagemagick--7.0.8-10.tar.xz"
-  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.8-10.tar.xz"
-  sha256 "d5309031d59130befa283266011efaab15b1e113f1a218a4ba24c821cd906472"
+  url "https://dl.bintray.com/homebrew/mirror/imagemagick--7.0.8-11.tar.xz"
+  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.8-11.tar.xz"
+  sha256 "c15f14c054b4fde417e7b82c23950047203f81e582de7f1270cf3bdfa8a38a03"
+  revision 2
   head "https://github.com/ImageMagick/ImageMagick.git"
 
   bottle do
-    sha256 "7489a9423b811b921a4f37eedc6d44f55f66d4371e81a51c1a343a9d8994b238" => :high_sierra
-    sha256 "0d17ce98dbcfef581287cf5db9acb05ee186e2143260a3d56ba5b7ff4d858625" => :sierra
-    sha256 "534863b26eb4ff97ab5039ec6808bb9ea57aff7ecf4d0523446159c07afd5d39" => :el_capitan
+    sha256 "ac3a4c98e2d66029ec651b1a29f5a13011c05d6f089db34ae0acc22a08a03311" => :mojave
+    sha256 "fd6d33cb8b0099d8c2eebc78fecd3a348b93309f4ff45dfa2a74f9058aaaeb36" => :high_sierra
+    sha256 "373389213c553cfe33cbb65a411d994de9c19b79cd03ef5c66545bbb50ede175" => :sierra
+    sha256 "862576f75a3ba912b334994ee7fed20037c15078a7526ca832ddf1c3444fa760" => :el_capitan
   end
 
   option "with-fftw", "Compile with FFTW support"
@@ -35,26 +37,26 @@ class Imagemagick < Formula
   depends_on "libtool"
   depends_on "xz"
 
+  depends_on "freetype" => :recommended
   depends_on "jpeg" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
-  depends_on "freetype" => :recommended
 
-  depends_on :x11 => :optional
+  depends_on "fftw" => :optional
   depends_on "fontconfig" => :optional
+  depends_on "ghostscript" => :optional
+  depends_on "libheif" => :optional
+  depends_on "liblqr" => :optional
+  depends_on "librsvg" => :optional
+  depends_on "libwmf" => :optional
   depends_on "little-cms" => :optional
   depends_on "little-cms2" => :optional
-  depends_on "libheif" => :optional
-  depends_on "libwmf" => :optional
-  depends_on "librsvg" => :optional
-  depends_on "liblqr" => :optional
   depends_on "openexr" => :optional
-  depends_on "ghostscript" => :optional
-  depends_on "webp" => :optional
   depends_on "openjpeg" => :optional
-  depends_on "fftw" => :optional
   depends_on "pango" => :optional
   depends_on "perl" => :optional
+  depends_on "webp" => :optional
+  depends_on :x11 => :optional
 
   if build.with? "openmp"
     depends_on "gcc"

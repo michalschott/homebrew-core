@@ -3,13 +3,14 @@ class Asdf < Formula
   homepage "https://github.com/asdf-vm"
   url "https://github.com/asdf-vm/asdf/archive/v0.5.1.tar.gz"
   sha256 "5e7d4d61256e9f8185fcf04ef2b7f060a821569764d5c1212dc7d0ef7eb2edee"
+  head "https://github.com/asdf-vm/asdf.git"
 
   bottle :unneeded
 
   depends_on "autoconf"
   depends_on "automake"
-  depends_on "libtool"
   depends_on "coreutils"
+  depends_on "libtool"
   depends_on "libyaml"
   depends_on "openssl"
   depends_on "readline"
@@ -36,6 +37,7 @@ class Asdf < Formula
   end
 
   test do
-    system "#{bin}/asdf", "plugin-list"
+    output = shell_output("#{bin}/asdf plugin-list")
+    assert_match "Oohes nooes ~! No plugins installed", output
   end
 end

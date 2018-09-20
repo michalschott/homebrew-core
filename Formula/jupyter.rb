@@ -8,6 +8,7 @@ class Jupyter < Formula
   bottle do
     cellar :any
     rebuild 1
+    sha256 "0759ea7082a96207c7160199016bd723d235d0b549daf0e36237a9ffc2ae1982" => :mojave
     sha256 "357e40d51326385dda5eed4cef3fbb3640d3955ba8010145ca45459529231114" => :high_sierra
     sha256 "8d6e8044647e0d10f26d6476a4887719fb948eed7223d4e42a5898b247335228" => :sierra
     sha256 "b19e7cf53f7d2802cf8feca141aaef74e98d2e7bc1cc06a36f5a6f237e29848a" => :el_capitan
@@ -17,9 +18,9 @@ class Jupyter < Formula
 
   depends_on "ipython"
   depends_on "pandoc"
+  depends_on "pyqt" if build.with? "qtconsole"
   depends_on "python"
   depends_on "zeromq"
-  depends_on "pyqt" if build.with? "qtconsole"
 
   resource "appnope" do
     url "https://files.pythonhosted.org/packages/26/34/0f3a5efac31f27fabce64645f8c609de9d925fe2915304d1a40f544cff0e/appnope-0.1.0.tar.gz"

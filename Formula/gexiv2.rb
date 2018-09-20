@@ -5,16 +5,17 @@ class Gexiv2 < Formula
   sha256 "81c528fd1e5e03577acd80fb77798223945f043fd1d4e06920c71202eea90801"
 
   bottle do
+    sha256 "a44a0225ab933dd6da6dadece5ed05a7dbb83b0372795a92f0bf6466c32e4535" => :mojave
     sha256 "c6da6deffd67e16ee41a570d6b2393caa04764c077b972c8b1ab6b5bde040261" => :high_sierra
     sha256 "ef19b3b862ba328ca17665f974355737389626e72075078a55a8bb00032bb9c9" => :sierra
     sha256 "be2ec9b0a9a314e982626156bb1b262648332334e57a03bc6c45b4ef14e223a1" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "gobject-introspection" => :build
-  depends_on "python@2"
-  depends_on "glib"
+  depends_on "pkg-config" => :build
   depends_on "exiv2"
+  depends_on "glib"
+  depends_on "python@2"
 
   # bug report opened on 2017/12/25, closed on 2018/01/05, reopened on 2018/02/06
   # https://bugzilla.gnome.org/show_bug.cgi?id=791941

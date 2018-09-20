@@ -8,27 +8,17 @@ class Openmsx < Formula
   bottle do
     cellar :any
     rebuild 1
+    sha256 "86804cbafdb16650a98598f20ff8093acf2a375a3be469504f912160301b4196" => :mojave
     sha256 "1fe237fb4200b9f0574de19da59434ba04df35320d3cae9f285a17d7c3f73222" => :high_sierra
     sha256 "14b2a737d35b8725ac2eff3e4ec02f1eef45542c7795e902d704cbdaf76c1857" => :sierra
     sha256 "0789729f06a73ae5acd2a04df373f839a2ac7d14e5679a380f7a485a777124ff" => :el_capitan
   end
 
-  deprecated_option "without-opengl" => "without-glew"
-
-  option "without-glew", "Disable OpenGL post-processing renderer"
-  option "with-laserdisc", "Enable Laserdisc support"
-
+  depends_on "freetype"
+  depends_on "glew"
+  depends_on "libpng"
   depends_on "sdl"
   depends_on "sdl_ttf"
-  depends_on "freetype"
-  depends_on "libpng"
-  depends_on "glew" => :recommended
-
-  if build.with? "laserdisc"
-    depends_on "libogg"
-    depends_on "libvorbis"
-    depends_on "theora"
-  end
 
   def install
     # Fixes a clang crash; this is an LLVM/Apple bug, not an openmsx bug

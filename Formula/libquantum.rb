@@ -6,6 +6,7 @@ class Libquantum < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "0a74bf2e856af7db63821d9ed7fbbd569977c04f808d52380fe841ad1e855cac" => :mojave
     sha256 "3e5896712c2c1a35d230aad235f312eac36946fbac1f605e6c5b90963c6c22c2" => :high_sierra
     sha256 "ac518e4460bb259e294f1eabbfeb85c9e996ccab05f6e97a915ec34d21ae4e5f" => :sierra
     sha256 "14c3e392521c20d45a993639de7f561bc0d2b2718158636074bac6f0a2d41581" => :el_capitan
@@ -19,12 +20,9 @@ class Libquantum < Formula
     sha256 "d8e3c4407076558f87640f1e618501ec85bc5f4c5a84db4117ceaec7105046e5"
   end
 
-  option "with-quobtools", "Install quobtools for debug"
-
   def install
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"
-    system "make", "quobtools_install" if build.with? "quobtools"
   end
 
   test do

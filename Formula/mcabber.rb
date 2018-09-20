@@ -6,6 +6,7 @@ class Mcabber < Formula
   revision 1
 
   bottle do
+    sha256 "9d764d5cf8465b0fe0f005324e93984e2d5be8be6abea22bbf9729b9bdc7550d" => :mojave
     sha256 "2823cae4b0424e6ee1e3beb912275889e4d25c11f90ce2395b77dc60dcda0b39" => :high_sierra
     sha256 "eec539d040769c20a0515909bf79f65265c22b868c7fffa72a014e54b68a5ccb" => :sierra
     sha256 "349752c0dfc6164a84e41548079657878fd5bd3226ec16df17470ac91f64fb16" => :el_capitan
@@ -19,18 +20,13 @@ class Mcabber < Formula
     depends_on "libtool" => :build
   end
 
-  deprecated_option "enable-aspell" => "with-aspell"
-  deprecated_option "enable-enchant" => "with-enchant"
-
   depends_on "pkg-config" => :build
   depends_on "glib"
-  depends_on "loudmouth"
   depends_on "gpgme"
   depends_on "libgcrypt"
-  depends_on "libotr"
   depends_on "libidn"
-  depends_on "aspell" => :optional
-  depends_on "enchant" => :optional
+  depends_on "libotr"
+  depends_on "loudmouth"
 
   def install
     if build.head?
@@ -39,14 +35,10 @@ class Mcabber < Formula
       system "./autogen.sh"
     end
 
-    args = ["--disable-debug", "--disable-dependency-tracking",
-            "--prefix=#{prefix}",
-            "--enable-otr"]
-
-    args << "--enable-aspell" if build.with? "aspell"
-    args << "--enable-enchant" if build.with? "enchant"
-
-    system "./configure", *args
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "--enable-otr"
     system "make", "install"
 
     pkgshare.install %w[mcabberrc.example contrib]

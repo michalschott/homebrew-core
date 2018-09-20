@@ -3,8 +3,8 @@ class Crystal < Formula
   homepage "https://crystal-lang.org/"
 
   stable do
-    url "https://github.com/crystal-lang/crystal/archive/0.25.1.tar.gz"
-    sha256 "9b5a7bd2de67ab36cc5430133228a1e656a431fc7d928a37a61109bd8da77fc6"
+    url "https://github.com/crystal-lang/crystal/archive/0.26.1.tar.gz"
+    sha256 "b7c755a7d0f49f572ae5c08b8b0139fcb1c6862c9479dfae74f00e2c8424fcb0"
 
     resource "shards" do
       url "https://github.com/crystal-lang/shards/archive/v0.8.1.tar.gz"
@@ -13,9 +13,10 @@ class Crystal < Formula
   end
 
   bottle do
-    sha256 "678df358cd84481ebf7caff0da1497b9ebda5e52e9682d0aed011d9325c1b2ab" => :high_sierra
-    sha256 "b15470237a34bbed50ea87ed49cafef29333eb7fa3cdc6f6e7e91534e99bc14e" => :sierra
-    sha256 "d05d4b439b62415cc10a6b17a4e83c4d30a935f51905e666496090bff5d20e33" => :el_capitan
+    sha256 "0bf97a99fe452e7a83deb22c50ce2711fb485a9ff8b7a1bc5dfec8112365ca9d" => :mojave
+    sha256 "282c85d7211749b2b33d5e6ca502e51a0889b5fa1646c0cfd9d0081e60d14cbb" => :high_sierra
+    sha256 "3daeb893653e62e81b869588d487bc32cd3aadd5c475f85e4f3c0a5430943219" => :sierra
+    sha256 "d52cdc6c25b5b8b49fc7e3ffa883cfe7e896a0f770bb2cb2661512bd670eb186" => :el_capitan
   end
 
   head do
@@ -26,22 +27,19 @@ class Crystal < Formula
     end
   end
 
-  option "without-release", "Do not build the compiler in release mode"
-  option "without-shards", "Do not include `shards` dependency manager"
-
-  depends_on "pkg-config" => :build
   depends_on "libatomic_ops" => :build # for building bdw-gc
-  depends_on "libevent"
+  depends_on "pkg-config" => :build
   depends_on "bdw-gc"
-  depends_on "llvm@5"
-  depends_on "pcre"
   depends_on "gmp" # std uses it but it's not linked
-  depends_on "libyaml" if build.with? "shards"
+  depends_on "libevent"
+  depends_on "libyaml"
+  depends_on "llvm"
+  depends_on "pcre"
 
   resource "boot" do
-    url "https://github.com/crystal-lang/crystal/releases/download/0.25.0/crystal-0.25.0-2-darwin-x86_64.tar.gz"
-    version "0.25.0-2"
-    sha256 "4f538660c097b7e6607df2953f34a6d6a1693e5a984cf4b1b1e77024029dc8fb"
+    url "https://github.com/crystal-lang/crystal/releases/download/0.26.0/crystal-0.26.0-1-darwin-x86_64.tar.gz"
+    version "0.26.0-1"
+    sha256 "13ccd6425593f33f7423423553bc5c2fdcf5d76b6b97b82bf4204bc55831ec43"
   end
 
   def install
@@ -59,18 +57,18 @@ class Crystal < Formula
     system "make", "deps"
     (buildpath/".build").mkpath
 
-    command = ["bin/crystal", "build", "-D", "without_openssl", "-D", "without_zlib", "-o", ".build/crystal", "src/compiler/crystal.cr"]
-    command.concat ["--release", "--no-debug"] if build.with? "release"
+    system "bin/crystal", "build",
+                          "-D", "without_openssl",
+                          "-D", "without_zlib",
+                          "-o", ".build/crystal",
+                          "src/compiler/crystal.cr",
+                          "--release", "--no-debug"
 
-    system *command
-
-    if build.with? "shards"
-      resource("shards").stage do
-        system buildpath/"bin/crystal", "build", "-o", buildpath/".build/shards", "src/shards.cr"
-      end
-      bin.install ".build/shards"
+    resource("shards").stage do
+      system buildpath/"bin/crystal", "build", "-o", buildpath/".build/shards", "src/shards.cr"
     end
 
+    bin.install ".build/shards"
     bin.install ".build/crystal"
     prefix.install "src"
     bash_completion.install "etc/completion.bash" => "crystal"

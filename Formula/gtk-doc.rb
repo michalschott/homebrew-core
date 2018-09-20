@@ -6,16 +6,17 @@ class GtkDoc < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "d85ddc463e1e8fea82aa81cd41ea69ae7879dc4493e7bd4b30a58c372233951b" => :mojave
     sha256 "be0ea15d4d139ca270cb09222baed7e0107d5ce406086efe8e849a5b547bb3d0" => :high_sierra
     sha256 "be0ea15d4d139ca270cb09222baed7e0107d5ce406086efe8e849a5b547bb3d0" => :sierra
     sha256 "be0ea15d4d139ca270cb09222baed7e0107d5ce406086efe8e849a5b547bb3d0" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "itstool" => :build
-  depends_on "gettext"
+  depends_on "pkg-config" => :build
   depends_on "docbook"
   depends_on "docbook-xsl"
+  depends_on "gettext"
   depends_on "libxml2"
   depends_on "python@2"
   depends_on "source-highlight"

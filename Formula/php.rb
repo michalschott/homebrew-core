@@ -1,13 +1,21 @@
 class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://secure.php.net/"
-  url "https://php.net/get/php-7.2.8.tar.xz/from/this/mirror"
-  sha256 "53ba0708be8a7db44256e3ae9fcecc91b811e5b5119e6080c951ffe7910ffb0f"
+  url "https://php.net/get/php-7.2.10.tar.xz/from/this/mirror"
+  sha256 "01c2154a3a8e3c0818acbdbc1a956832c828a0380ce6d1d14fea495ea21804f0"
 
   bottle do
-    sha256 "a1672a1e262cc8ba9091482ac16d8d23f75cdcbf50195aeda160a8d5e55da0b2" => :high_sierra
-    sha256 "64d538f3732b3671267dcdb2b2b785564b2301b0a3eb1c414d58edb603e5eef5" => :sierra
-    sha256 "693da1396df17c9b0628d8856985340249765f38b25ae95d227a751e4e45aec2" => :el_capitan
+    sha256 "f6267ba38a514ce87e979942a381e4a453df2a4c0ab543911e201c72eb5cb4c4" => :mojave
+    sha256 "3fc056f4c970bf2590fa26552d74dec8e67393cdf831704d66bb8ee1510cbc6b" => :high_sierra
+    sha256 "ccf3c9f1d496d7f1d60a22d6b2ac95f6a1263726bd07eb5a1be070d15f85e518" => :sierra
+    sha256 "97df44572785772091aaaedd038a10bc481ed7a04c341653f0ecb930b5eb8035" => :el_capitan
+  end
+
+  devel do
+    url "https://downloads.php.net/~cmb/php-7.3.0RC1.tar.xz"
+    sha256 "f6af9e4e2376f1aadee8d1b4b7a60c5080bf53fe8816e141c78d4f72c93c5075"
+
+    depends_on "openldap"
   end
 
   depends_on "httpd" => [:build, :test]
@@ -25,22 +33,32 @@ class Php < Formula
   depends_on "gmp"
   depends_on "icu4c"
   depends_on "jpeg"
+  depends_on "libiconv" if DevelopmentTools.clang_build_version >= 1000
   depends_on "libpng"
   depends_on "libpq"
   depends_on "libsodium"
   depends_on "libzip"
+  depends_on "openldap" if DevelopmentTools.clang_build_version >= 1000
   depends_on "openssl"
   depends_on "pcre"
+  depends_on "sqlite"
   depends_on "unixodbc"
   depends_on "webp"
 
   needs :cxx11
+
+  # PHP build system incorrectly links system libraries
+  # see https://github.com/php/php-src/pull/3472
+  patch :DATA
 
   def install
     # Ensure that libxml2 will be detected correctly in older MacOS
     if MacOS.version == :el_capitan || MacOS.version == :sierra
       ENV["SDKROOT"] = MacOS.sdk_path
     end
+
+    # buildconf required due to system library linking bug patch
+    system "./buildconf", "--force"
 
     inreplace "configure" do |s|
       s.gsub! "APACHE_THREADED_MPM=`$APXS_HTTPD -V | grep 'threaded:.*yes'`",
@@ -74,6 +92,10 @@ class Php < Formula
     # Prevent homebrew from harcoding path to sed shim in phpize script
     ENV["lt_cv_path_SED"] = "sed"
 
+    # Each extension that is built on Mojave needs a direct reference to the
+    # sdk path or it won't find the headers
+    headers_path = "=#{MacOS.sdk_path_if_needed}/usr"
+
     args = %W[
       --prefix=#{prefix}
       --localstatedir=#{var}
@@ -105,7 +127,7 @@ class Php < Formula
       --enable-wddx
       --enable-zip
       --with-apxs2=#{Formula["httpd"].opt_bin}/apxs
-      --with-bz2
+      --with-bz2#{headers_path}
       --with-fpm-user=_www
       --with-fpm-group=_www
       --with-freetype-dir=#{Formula["freetype"].opt_prefix}
@@ -114,38 +136,50 @@ class Php < Formula
       --with-gmp=#{Formula["gmp"].opt_prefix}
       --with-icu-dir=#{Formula["icu4c"].opt_prefix}
       --with-jpeg-dir=#{Formula["jpeg"].opt_prefix}
-      --with-kerberos
+      --with-kerberos#{headers_path}
       --with-layout=GNU
-      --with-ldap
-      --with-ldap-sasl
-      --with-libedit
+      --with-ldap-sasl#{headers_path}
+      --with-libxml-dir#{headers_path}
+      --with-libedit#{headers_path}
       --with-libzip
-      --with-mhash
+      --with-mhash#{headers_path}
       --with-mysql-sock=/tmp/mysql.sock
       --with-mysqli=mysqlnd
-      --with-ndbm
+      --with-ndbm#{headers_path}
       --with-openssl=#{Formula["openssl"].opt_prefix}
       --with-password-argon2=#{Formula["argon2"].opt_prefix}
       --with-pdo-dblib=#{Formula["freetds"].opt_prefix}
       --with-pdo-mysql=mysqlnd
       --with-pdo-odbc=unixODBC,#{Formula["unixodbc"].opt_prefix}
       --with-pdo-pgsql=#{Formula["libpq"].opt_prefix}
+      --with-pdo-sqlite=#{Formula["sqlite"].opt_prefix}
       --with-pgsql=#{Formula["libpq"].opt_prefix}
       --with-pic
       --with-png-dir=#{Formula["libpng"].opt_prefix}
       --with-pspell=#{Formula["aspell"].opt_prefix}
       --with-sodium=#{Formula["libsodium"].opt_prefix}
+      --with-sqlite3=#{Formula["sqlite"].opt_prefix}
       --with-unixODBC=#{Formula["unixodbc"].opt_prefix}
       --with-webp-dir=#{Formula["webp"].opt_prefix}
       --with-xmlrpc
-      --with-xsl
-      --with-zlib
+      --with-xsl#{headers_path}
+      --with-zlib#{headers_path}
     ]
 
     if MacOS.version < :lion
       args << "--with-curl=#{Formula["curl"].opt_prefix}"
     else
-      args << "--with-curl"
+      args << "--with-curl#{headers_path}"
+    end
+
+    if build.devel? || MacOS.sdk_path_if_needed
+      args << "--with-ldap=#{Formula["openldap"].opt_prefix}"
+    else
+      args << "--with-ldap"
+    end
+
+    if MacOS.sdk_path_if_needed
+      args << "--with-iconv=#{Formula["libiconv"].opt_prefix}"
     end
 
     system "./configure", *args
@@ -156,7 +190,7 @@ class Php < Formula
     extension_dir = Utils.popen_read("#{bin}/php-config --extension-dir").chomp
     orig_ext_dir = File.basename(extension_dir)
     inreplace bin/"php-config", lib/"php", prefix/"pecl"
-    inreplace "php.ini-development", "; extension_dir = \"./\"",
+    inreplace "php.ini-development", %r{; ?extension_dir = "\./"},
       "extension_dir = \"#{HOMEBREW_PREFIX}/lib/php/pecl/#{orig_ext_dir}\""
 
     config_files = {
@@ -290,12 +324,18 @@ class Php < Formula
   end
 
   test do
-    assert_match /^Zend OPcache$/, shell_output("#{bin}/php -i"), "Zend OPCache extension not loaded"
+    assert_match /^Zend OPcache$/, shell_output("#{bin}/php -i"),
+      "Zend OPCache extension not loaded"
+    # Test related to libxml2 and
+    # https://github.com/Homebrew/homebrew-core/issues/28398
+    assert_includes MachO::Tools.dylibs("#{bin}/php"),
+      "#{Formula["libpq"].opt_lib}/libpq.5.dylib"
     system "#{sbin}/php-fpm", "-t"
     system "#{bin}/phpdbg", "-V"
     system "#{bin}/php-cgi", "-m"
     # Prevent SNMP extension to be added
-    assert_no_match /^snmp$/, shell_output("#{bin}/php -m"), "SNMP extension doesn't work reliably with Homebrew on High Sierra"
+    assert_no_match /^snmp$/, shell_output("#{bin}/php -m"),
+      "SNMP extension doesn't work reliably with Homebrew on High Sierra"
     begin
       require "socket"
 
@@ -390,3 +430,33 @@ class Php < Formula
     end
   end
 end
+
+__END__
+diff --git a/acinclude.m4 b/acinclude.m4
+index 1deb50d2983c..d0e66c8b6344 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -441,7 +441,11 @@ dnl
+ dnl Adds a path to linkpath/runpath (LDFLAGS)
+ dnl
+ AC_DEFUN([PHP_ADD_LIBPATH],[
+-  if test "$1" != "/usr/$PHP_LIBDIR" && test "$1" != "/usr/lib"; then
++  case "$1" in
++  "/usr/$PHP_LIBDIR"|"/usr/lib"[)] ;;
++  /Library/Developer/CommandLineTools/SDKs/*/usr/lib[)] ;;
++  /Applications/Xcode*.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*/usr/lib[)] ;;
++  *[)]
+     PHP_EXPAND_PATH($1, ai_p)
+     ifelse([$2],,[
+       _PHP_ADD_LIBPATH_GLOBAL([$ai_p])
+@@ -452,8 +456,8 @@ AC_DEFUN([PHP_ADD_LIBPATH],[
+       else
+         _PHP_ADD_LIBPATH_GLOBAL([$ai_p])
+       fi
+-    ])
+-  fi
++    ]) ;;
++  esac
+ ])
+
+ dnl

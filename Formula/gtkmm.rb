@@ -7,18 +7,19 @@ class Gtkmm < Formula
 
   bottle do
     cellar :any
+    sha256 "1994188ab39bcf326732e29f87126bb92f7c6e48a34ee418706009bc94b5873f" => :mojave
     sha256 "b8f94d6c328554f7cbcc5da15963e54f332b00351dac1f10186737f3057080db" => :high_sierra
     sha256 "8502c0c9aa545a8fc5184c4f6343278482e955a848813152700f8773988f8878" => :sierra
     sha256 "bc5bf8829fd780791602522cc9570aa7287bf700c84af50d580dc35b352ce891" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
+  depends_on "atkmm"
+  depends_on "cairomm"
   depends_on "glibmm"
   depends_on "gtk+"
   depends_on "libsigc++"
   depends_on "pangomm"
-  depends_on "atkmm"
-  depends_on "cairomm"
 
   needs :cxx11
 

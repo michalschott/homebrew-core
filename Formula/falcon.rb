@@ -7,6 +7,7 @@ class Falcon < Formula
 
   bottle do
     rebuild 1
+    sha256 "f9741251c89c441ae25ada11413ae31e988f00f84ddc05b80549d62fd2db31a4" => :mojave
     sha256 "6349ea1828c7474157a6bac4131c4ac952aba1330014ffd92efeaecc6ebe486f" => :high_sierra
     sha256 "560217a0114fb31f303271eb925da7959d8e02fb8e3d118c0ea449f34ddd3e7b" => :sierra
     sha256 "48f3fc7a4ee3f479b0dafae18262cb900d64f43f5a3f2fa32727b65f6836f81e" => :el_capitan
@@ -14,12 +15,6 @@ class Falcon < Formula
     sha256 "bf2a677c2d6777b577bffc22d3c75a65525700bef6478035dececa002e5e11ec" => :mavericks
     sha256 "9730e050c70ad2803afdf9cd03b108b8c4bb57b797bd92595523ad0731639b81" => :mountain_lion
   end
-
-  option "with-editline", "Use editline instead of readline"
-  option "with-feathers", "Include feathers (extra libraries)"
-
-  deprecated_option "editline" => "with-editline"
-  deprecated_option "feathers" => "with-feathers"
 
   depends_on "cmake" => :build
   depends_on "pcre"
@@ -32,21 +27,11 @@ class Falcon < Formula
       -DFALCON_BIN_DIR=#{bin}
       -DFALCON_LIB_DIR=#{lib}
       -DFALCON_MAN_DIR=#{man1}
+      -DFALCON_WITH_EDITLINE=OFF
+      -DFALCON_WITH_FEATHERS=NO
       -DFALCON_WITH_INTERNAL_PCRE=OFF
       -DFALCON_WITH_MANPAGES=ON
     ]
-
-    if build.with? "editline"
-      args << "-DFALCON_WITH_EDITLINE=ON"
-    else
-      args << "-DFALCON_WITH_EDITLINE=OFF"
-    end
-
-    if build.with? "feathers"
-      args << "-DFALCON_WITH_FEATHERS=feathers"
-    else
-      args << "-DFALCON_WITH_FEATHERS=NO"
-    end
 
     system "cmake", *args
     system "make"

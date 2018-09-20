@@ -7,15 +7,12 @@ class Ibex < Formula
 
   bottle do
     cellar :any
+    sha256 "ccb720753b1833cdac6ec449644d07bee7b341dd8c049be84d45df4af7313183" => :mojave
     sha256 "9df6236bb522c74caf3cbde0eaf19465e2a3674588282982348b628322ca097a" => :high_sierra
     sha256 "4b835a404ec50199fccc22c9248bccbf235d63a8f0736dad5b95df8babdea2cc" => :sierra
     sha256 "8f4d1957bbe546215cf3d328ce06ae6aae6657c764ca2658895654358596f256" => :el_capitan
   end
 
-  option "with-java", "Enable Java bindings for CHOCO solver."
-  option "with-ampl", "Use AMPL file loader plugin"
-
-  depends_on :java => ["1.8+", :optional]
   depends_on "bison" => :build
   depends_on "flex" => :build
   depends_on "pkg-config" => :build
@@ -28,21 +25,10 @@ class Ibex < Formula
     # Reported 9 Oct 2017 https://github.com/ibex-team/ibex-lib/issues/286
     ENV.deparallelize
 
-    if build.with?("java") && build.with?("ampl")
-      odie "Cannot set options --with-java and --with-ampl simultaneously for now."
-    end
-
-    args = %W[
-      --prefix=#{prefix}
-      --enable-shared
-      --with-optim
-      --lp-lib=soplex
-    ]
-
-    args << "--with-jni" if build.with? "java"
-    args << "--with-ampl" if build.with? "ampl"
-
-    system "./waf", "configure", *args
+    system "./waf", "configure", "--prefix=#{prefix}",
+                                 "--enable-shared",
+                                 "--lp-lib=soplex",
+                                 "--with-optim"
     system "./waf", "install"
 
     pkgshare.install %w[examples plugins/solver/benchs]

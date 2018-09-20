@@ -1,21 +1,22 @@
 class Gegl < Formula
   desc "Graph based image processing framework"
   homepage "http://www.gegl.org/"
-  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.6.tar.bz2"
-  sha256 "f397eb43f6b8ec387d177b21a0002070c78c38a94a1a0ca6575226f081519ae5"
+  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.8.tar.bz2"
+  sha256 "719468eec56ac5b191626a0cb6238f3abe9117e80594890c246acdc89183ae49"
 
   bottle do
-    sha256 "3687f6337da3cebe1b67d11d5871e882731fb6ce3121c95c17c03e46973e8554" => :high_sierra
-    sha256 "c334b1f677938254fa7c5c463f6045d5fbe2110ffae84d2428bf0324b1074cd4" => :sierra
-    sha256 "40e2567f527ae2e7b66240802b23891683e4bb35f4cb51022e9bf5b9d672dc2c" => :el_capitan
+    sha256 "ac42f2a90467b4f7dbbbfb97a22d5a732c8f1533a5dc9c7e210bb72bbbf90038" => :mojave
+    sha256 "ed9407e3b8786f1840bde01d52a0c590b4a2a9c3ca0f4b91070a7ccdc7320f2f" => :high_sierra
+    sha256 "acd3639be39b4ab8c32e1045fe1da34ba6a9ed2629f088f6e77d591aa434bf7a" => :sierra
+    sha256 "b750b42ab0c76b316bfe9e247764d5c6a1fdb47584c9408a1e989c0d2b0ce850" => :el_capitan
   end
 
   head do
     # Use the Github mirror because official git unreliable.
     url "https://github.com/GNOME/gegl.git"
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
@@ -27,28 +28,18 @@ class Gegl < Formula
   depends_on "jpeg"
   depends_on "json-glib"
   depends_on "libpng"
-  depends_on "cairo" => :optional
-  depends_on "librsvg" => :optional
-  depends_on "lua" => :optional
-  depends_on "pango" => :optional
-  depends_on "sdl" => :optional
 
   conflicts_with "coreutils", :because => "both install `gcut` binaries"
 
   def install
-    args = %W[
-      --disable-debug
-      --disable-dependency-tracking
-      --prefix=#{prefix}
-      --disable-docs
-      --without-jasper
-      --without-umfpack
-    ]
-
-    args << "--without-cairo" if build.without? "cairo"
-
     system "./autogen.sh" if build.head?
-    system "./configure", *args
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "--disable-docs",
+                          "--without-cairo",
+                          "--without-jasper",
+                          "--without-umfpack"
     system "make", "install"
   end
 

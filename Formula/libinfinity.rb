@@ -6,6 +6,7 @@ class Libinfinity < Formula
   revision 1
 
   bottle do
+    sha256 "a95d07fc7f92c09d4867cbe74adca17e3895a29538bc747f742226ae7d9dbc10" => :mojave
     sha256 "5a82262c8519af2c73c3ee69c9632031cc6e7cc6bc52c2eef5defe74025b7a24" => :high_sierra
     sha256 "d9791b732d6a5c1bbba29941cfc8e0847c92bacebc43cdf9aef26799e8bada8f" => :sierra
     sha256 "ad024ec7122272de003ebfee98ffa2c0518d40061dbf7631627e720ef27ad4e9" => :el_capitan
@@ -13,9 +14,9 @@ class Libinfinity < Formula
 
   depends_on "pkg-config" => :build
   depends_on "glib"
-  depends_on "gtk+3"
   depends_on "gnutls"
   depends_on "gsasl"
+  depends_on "gtk+3"
 
   # MacPorts patch to fix pam include. This is still applicable to 0.6.4.
   patch :p0 do

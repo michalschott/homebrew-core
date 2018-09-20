@@ -9,6 +9,7 @@ class Onepass < Formula
   bottle do
     cellar :any
     rebuild 2
+    sha256 "73670587faeefda4edad860ade27575777e1236bcf7260050630e4f4dc13fd48" => :mojave
     sha256 "fe29b54dd8b047eb73dc9d00ec65ad823870733e0948e02d2303b0af8ce4a664" => :high_sierra
     sha256 "6f67d2c8a4bc28317c517bd407df63a5fb849dc001fdcd02bc5fdbe15d8d27af" => :sierra
     sha256 "8410258ade7f471629235368ba63f11d124335a8af394a6b16493622b3aac825" => :el_capitan
@@ -16,9 +17,9 @@ class Onepass < Formula
     sha256 "beb5a20a0642cff5f9e43b6ce1ce9a9c45589ba748150f333e81a0c70090b7f2" => :mavericks
   end
 
-  depends_on "python@2"
   depends_on "swig" => :build
   depends_on "openssl" # For M2Crypto
+  depends_on "python@2"
 
   resource "m2crypto" do
     url "https://files.pythonhosted.org/packages/source/M/M2Crypto/M2Crypto-0.23.0.tar.gz"

@@ -8,15 +8,16 @@ class Libggz < Formula
 
   bottle do
     cellar :any
+    sha256 "efddc954be758a5560c63326ce4d3b2a126974221ad796587bf2a0bdfae7dd3a" => :mojave
     sha256 "9a749d02e1f492d53f1398998c78b47b8b6eeb6907a4fb4ed1d27833b37653c2" => :high_sierra
     sha256 "cb95d1deb75b87bc4d9a814e838b7ffff205d1251c998708a52dfc932ce73ebc" => :sierra
     sha256 "1fc7a664f9d4376fd21aad2e75f7a3990cf8994cb0b4947362ddcb7732e5bda0" => :el_capitan
     sha256 "6408ac1f15a3cfa780197456ffed4f4e152fc3b7c0eb5dc8938b17ab280f7d11" => :yosemite
   end
 
+  depends_on "gettext"
   # Libggz of this version is unable to build with gnutls-30 and later.
   depends_on "libgcrypt"
-  depends_on "gettext"
 
   def install
     ENV.append "CPPFLAS", "-I#{Formula["gettext"].opt_prefix}/include"

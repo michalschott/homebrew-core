@@ -7,15 +7,16 @@ class Libgit2 < Formula
 
   bottle do
     cellar :any
+    sha256 "9dfc432eeeebbb09ce24b9dadb62e9c45755ee7c4644e3a04801246c48dbe0ed" => :mojave
     sha256 "eaaf186da6c4ee4ba89f2225142a1c9fd52eac009c3666cc23a2d45dbcae9f6a" => :high_sierra
     sha256 "6b4866ccdddc9ddef5267ec2b612c9fc664d96b1495d510b49d0e8d379665579" => :sierra
     sha256 "4808ebcf65a6398a7619ba978e2c27ae195c7a748b3f3596730e004544cd9a61" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "cmake" => :build
-  depends_on "libssh2" => :recommended
+  depends_on "pkg-config" => :build
   depends_on "openssl" if MacOS.version <= :lion # Uses SecureTransport on >10.7
+  depends_on "libssh2" => :recommended
 
   def install
     args = std_cmake_args

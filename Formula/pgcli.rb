@@ -6,14 +6,15 @@ class Pgcli < Formula
 
   bottle do
     cellar :any
+    sha256 "27bdb25bfbb82fc04698e0fef6c9517de075e3388fac0a3925c7f2459df02665" => :mojave
     sha256 "9673c97693a3300ced995a0f1045c6374ddafbe3b0f2aea34278a3bb01d5b76a" => :high_sierra
     sha256 "86c45d6bc6aa7d878c87852ffc45efdfdfaf1a5bbe06911f2794460d52801215" => :sierra
     sha256 "5e92f1b75b24851236bd9ceee16a9477c69358100ed4415866bd631e352e0101" => :el_capitan
   end
 
-  depends_on "python@2"
   depends_on "libpq"
   depends_on "openssl"
+  depends_on "python@2"
 
   resource "backports.csv" do
     url "https://files.pythonhosted.org/packages/c5/d2/6adc8e81e57a847fbe63b7967223aa13e340875a273be218ef15f162037d/backports.csv-1.0.6.tar.gz"

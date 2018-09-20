@@ -7,13 +7,14 @@ class Tenyr < Formula
 
   bottle do
     cellar :any
+    sha256 "79f1f08181a4a3563a95e002068cde55db5dd83f1e67e4baa10937659d72bb97" => :mojave
     sha256 "7ed5a7f7573c9970216c21dc1586fef1107ea97e20f143dd11ee41c6627d13b3" => :high_sierra
     sha256 "0b734e40019ad537072b648526d08c6d34c669251ca5bb8b4c22a3c2bd3ea745" => :sierra
     sha256 "1b09019bb0131b4ce6599612e55a828d22390757473c22dceab47aa30671fd1f" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "bison" => :build # tenyr requires bison >= 2.5
+  depends_on "pkg-config" => :build
   # sdl2_image implies sdl2. If we specify sdl2 separately, we create
   # nonsensical possibilities like `--with-sdl2_image --without-sdl2`
   # tenyr requires sdl2_image --with-png

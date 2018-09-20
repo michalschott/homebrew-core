@@ -5,34 +5,24 @@ class Gwenhywfar < Formula
   sha256 "5a88daabba1388f9528590aab5de527a12dd44a7da4572ce48469a29911b0fb0"
 
   bottle do
+    sha256 "6e6850e6a2e0edcd03665b11f66d51a2a0cb351037fdbd8b8677f4ae53595640" => :mojave
     sha256 "229eac2112343d4616576f947213706ebe5f28e0030dd5bef89ee4efa3043ac9" => :high_sierra
     sha256 "97aaff3937e4551227a66a55963d3dda7e24e53b9e9aa1ffca78ae455be00ab1" => :sierra
     sha256 "1760007de92dd5e7282a82f2534feb65380338fd8cb11632eef8914c2ddb56a4" => :el_capitan
   end
 
-  option "without-cocoa", "Build without cocoa support"
-  option "with-test", "Run build-time check"
-
-  deprecated_option "with-check" => "with-test"
-
   depends_on "pkg-config" => :build
   depends_on "gettext"
   depends_on "gnutls"
-  depends_on "openssl"
   depends_on "libgcrypt"
-  depends_on "gtk+" => :optional
+  depends_on "openssl"
 
   def install
-    guis = []
-    guis << "gtk2" if build.with? "gtk+"
-    guis << "cocoa" if build.with? "cocoa"
-
     system "autoreconf", "-fiv" if build.head?
     system "./configure", "--disable-debug",
                           "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
-                          "--with-guis=#{guis.join(" ")}"
-    system "make", "check" if build.with? "test"
+                          "--with-guis=cocoa"
     system "make", "install"
   end
 

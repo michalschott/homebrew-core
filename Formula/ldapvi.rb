@@ -8,6 +8,7 @@ class Ldapvi < Formula
 
   bottle do
     cellar :any
+    sha256 "757050948ca19e7d2cd1e13a425c273fd0573a1d10ce638b194c14662e5348cc" => :mojave
     sha256 "266886333e3e96868249fb5ea6117f95e262884b12c87999ce10839e7b54840a" => :high_sierra
     sha256 "715fa62d9a31e3d64eb7be63847bfcb6430baf14513374afeb3861a9c736c27e" => :sierra
     sha256 "bc0b47872ac179d5797a0431e268708b0fa5e6a444cfbcbefb9c5b565d44c6a6" => :el_capitan
@@ -18,9 +19,9 @@ class Ldapvi < Formula
   depends_on "xz" => :build # Homebrew bug. Shouldn't need declaring explicitly.
   depends_on "gettext"
   depends_on "glib"
+  depends_on "openssl"
   depends_on "popt"
   depends_on "readline"
-  depends_on "openssl"
 
   # These patches are applied upstream but release process seems to be dead.
   # http://www.lichteblau.com/git/?p=ldapvi.git;a=commit;h=256ced029c235687bfafdffd07be7d47bf7af39b

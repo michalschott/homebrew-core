@@ -7,14 +7,15 @@ class Stella < Formula
 
   bottle do
     cellar :any
+    sha256 "6880937715c2f6961602ee8b3ec4061ade86e40cdabdbe917c7f16b0b979ab35" => :mojave
     sha256 "382b6e15d5a8dca9745bb1ba933da077cbd2d11b74b971f031933b8745450e1c" => :high_sierra
     sha256 "f5b874f65035eb9825ac68d3cebef565945cb62eb7f3d6708f8dc051f55f8579" => :sierra
     sha256 "3f71f5dfa4f921dcc8ff076e7054f13599ea2484c1927a7f0c67a33080713fb5" => :el_capitan
   end
 
   depends_on :xcode => :build
-  depends_on "sdl2"
   depends_on "libpng"
+  depends_on "sdl2"
 
   def install
     sdl2 = Formula["sdl2"]

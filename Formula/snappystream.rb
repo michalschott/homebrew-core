@@ -7,6 +7,7 @@ class Snappystream < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "906ed99a4707b0b8a0fb1b14859b16bbdb23e61c4a1c3016559e4fb05398c118" => :mojave
     sha256 "93bfef130708be8e52485c4beea0524bbc89cbc2a076d2d456b10dd3d401136f" => :high_sierra
     sha256 "43253ef9ad617662532e7da29acf8721552a69733367043fa79c534db3ec5417" => :sierra
     sha256 "a43cdc3438c25363ee6d98c85bce3a777c07860265a5a120789eff46da1c71ec" => :el_capitan
@@ -14,12 +15,9 @@ class Snappystream < Formula
 
   depends_on "cmake" => :build
   depends_on "snappy"
-  depends_on "boost" => :optional
 
   def install
-    args = std_cmake_args + %w[. -DBUILD_TESTS=ON]
-    args << "-DWITH_BOOST_IOSTREAMS=1" if build.with? "boost"
-    system "cmake", *args
+    system "cmake", ".", *std_cmake_args, "-DBUILD_TESTS=ON"
     system "make", "all", "test", "install"
   end
 

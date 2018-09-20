@@ -6,25 +6,25 @@ class EasyTag < Formula
   revision 1
 
   bottle do
+    sha256 "1c3dc84fc2520f49251424b819cf3639a0d8900e369daaffad34737a8f04a948" => :mojave
     sha256 "3ff0ba537d0f0f74f3c61cb116fd11319378148fbeb1d547428deb93040c522f" => :high_sierra
     sha256 "53f9be6d08d22ddd73e13f73fa74f9acd1dd7f4c834043637cddffa8d900435d" => :sierra
     sha256 "eb0d0b85c5d5047d06aa311784e859041bffdb447e57c13fec7587f60a6e6043" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "intltool" => :build
   depends_on "itstool" => :build
+  depends_on "pkg-config" => :build
+  depends_on "adwaita-icon-theme"
+  depends_on "flac"
   depends_on "gtk+3"
   depends_on "hicolor-icon-theme"
-  depends_on "adwaita-icon-theme"
   depends_on "id3lib"
   depends_on "libid3tag"
-  depends_on "taglib"
-
-  depends_on "libvorbis"
-  depends_on "flac"
   depends_on "libogg"
+  depends_on "libvorbis"
   depends_on "speex"
+  depends_on "taglib"
   depends_on "wavpack"
 
   # disable gtk-update-icon-cache

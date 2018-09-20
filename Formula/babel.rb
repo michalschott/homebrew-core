@@ -1,25 +1,35 @@
 require "language/node"
+require "json"
 
 class Babel < Formula
   desc "Compiler for writing next generation JavaScript"
   homepage "https://babeljs.io/"
-  url "https://registry.npmjs.org/babel-cli/-/babel-cli-6.26.0.tgz"
-  sha256 "81ac501721ff18200581c58542fa6226986766c53be35ad8f921fabd47834d02"
+  url "https://registry.npmjs.org/@babel/cli/-/cli-7.1.0.tgz"
+  sha256 "4bdf9954f05402825a0bf5fb0903f7146d9edf75e1b0479ed2aa70d636d044a4"
 
   bottle do
-    sha256 "283507db612687957e8855de052f97ebb8eafa9559f7edab627cb334012743c8" => :high_sierra
-    sha256 "c4e2ca0a3d4f9d77b4d6c78c3982b333a8751fa36e5e0ceb506ef3d0e207c4f2" => :sierra
-    sha256 "79ed0bda434eccc0d634407fcafebc419f529246472a807d16fb05739b9dc4f6" => :el_capitan
-  end
-
-  devel do
-    url "https://registry.npmjs.org/babel-cli/-/babel-cli-7.0.0-alpha.12.tgz"
-    sha256 "a81e2421486ca48d3961c4ab1fada8acd3bb3583ccfb28822cbb0b16a2635144"
+    sha256 "1e2bd66b50516b91a8ac4a74d90f4b02035631ff2cf8a894a0628a4a8cdcf562" => :mojave
+    sha256 "76bb0d58cf2403e39f695254df896481bf6eb5552e553e742f9c3758446b9290" => :high_sierra
+    sha256 "6e9aea1b016b41e75486739ccafc0b5e627c58bc7c0902cac8fb9643758a3b9b" => :sierra
+    sha256 "f60037a2c766012a20f2e2219f3ea110eb5f4bf76af2d6ee147a13e79e4c05a5" => :el_capitan
   end
 
   depends_on "node"
 
+  resource "babel-core" do
+    url "https://registry.npmjs.org/@babel/core/-/core-7.1.0.tgz"
+    sha256 "c7e92941eeeae09167fe765b8ade41059329feaac998cda4aa41fc010a60b807"
+  end
+
   def install
+    (buildpath/"node_modules/@babel/core").install resource("babel-core")
+
+    # declare babel-core as a bundledDependency of babel-cli
+    pkg_json = JSON.parse(IO.read("package.json"))
+    pkg_json["dependencies"]["@babel/core"] = resource("babel-core").version
+    pkg_json["bundledDependencies"] = ["@babel/core"]
+    IO.write("package.json", JSON.pretty_generate(pkg_json))
+
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
@@ -31,5 +41,7 @@ class Babel < Formula
 
     system bin/"babel", "script.js", "--out-file", "script-compiled.js"
     assert_predicate testpath/"script-compiled.js", :exist?, "script-compiled.js was not generated"
+
+    assert_equal version, resource("babel-core").version
   end
 end

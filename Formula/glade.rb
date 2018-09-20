@@ -6,22 +6,23 @@ class Glade < Formula
   revision 1
 
   bottle do
+    sha256 "354f3f75dd6f67eb7038bf492137c950e742261da55b35ac6aba6e2491ff3621" => :mojave
     sha256 "8b2006714375e4ea9fc74bbd73e6ef41da6551a2b0e2813cece71d8ce4ca661c" => :high_sierra
     sha256 "58616499a9a2b2aef8d6568faf7a7fbac66d7954491e6f00c61acdb2b3ea207d" => :sierra
     sha256 "812042f677b69a24a9aefdbdeb733691813cb46b33ff50d991af97ddfe39fc59" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
-  depends_on "intltool" => :build
-  depends_on "itstool" => :build
   depends_on "docbook-xsl" => :build
   depends_on "gobject-introspection" => :build
-  depends_on "gettext"
-  depends_on "libxml2"
+  depends_on "intltool" => :build
+  depends_on "itstool" => :build
+  depends_on "pkg-config" => :build
   depends_on "adwaita-icon-theme"
-  depends_on "hicolor-icon-theme"
+  depends_on "gettext"
   depends_on "gtk+3"
   depends_on "gtk-mac-integration"
+  depends_on "hicolor-icon-theme"
+  depends_on "libxml2"
 
   def install
     # Find our docbook catalog

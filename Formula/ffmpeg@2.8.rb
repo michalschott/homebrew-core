@@ -5,6 +5,7 @@ class FfmpegAT28 < Formula
   sha256 "35647f6c1f6d4a1719bc20b76bf4c26e4ccd665f46b5676c0e91c5a04622ee21"
 
   bottle do
+    sha256 "95179f517090dd0fbdca100668ca9baea81b6d4bb9ebd3b1888f5f49970abbf2" => :mojave
     sha256 "77714c2ed74758ffca2e0852c7784022a06903be46a4094b5813cdcd3a3f7caf" => :high_sierra
     sha256 "e5c3822571957ffa442a96f4287c591b4943bf03c89d8fe3dafbf3efc7e98013" => :sierra
     sha256 "aaa810b670d9d60e1f81d8bd7f0cd6bebba3732b48f42749af59b1839a4c5727" => :el_capitan
@@ -43,40 +44,41 @@ class FfmpegAT28 < Formula
   depends_on "texi2html" => :build
   depends_on "yasm" => :build
 
-  depends_on "x264" => :recommended
+  depends_on "sdl" if build.with? "ffplay"
+
   depends_on "lame" => :recommended
   depends_on "libvo-aacenc" => :recommended
+  depends_on "x264" => :recommended
   depends_on "xvid" => :recommended
 
+  depends_on "dcadec" => :optional
   depends_on "faac" => :optional
+  depends_on "fdk-aac" => :optional
   depends_on "fontconfig" => :optional
   depends_on "freetype" => :optional
-  depends_on "theora" => :optional
+  depends_on "frei0r" => :optional
+  depends_on "libass" => :optional
+  depends_on "libbluray" => :optional
+  depends_on "libbs2b" => :optional
+  depends_on "libcaca" => :optional
+  depends_on "libquvi" => :optional
+  depends_on "libsoxr" => :optional
+  depends_on "libssh" => :optional
+  depends_on "libvidstab" => :optional
   depends_on "libvorbis" => :optional
   depends_on "libvpx" => :optional
-  depends_on "rtmpdump" => :optional
   depends_on "opencore-amr" => :optional
-  depends_on "libass" => :optional
   depends_on "openjpeg" => :optional
-  depends_on "sdl" if build.with? "ffplay"
+  depends_on "openssl" => :optional
+  depends_on "opus" => :optional
+  depends_on "rtmpdump" => :optional
+  depends_on "schroedinger" => :optional
   depends_on "snappy" => :optional
   depends_on "speex" => :optional
-  depends_on "schroedinger" => :optional
-  depends_on "fdk-aac" => :optional
-  depends_on "opus" => :optional
-  depends_on "frei0r" => :optional
-  depends_on "libcaca" => :optional
-  depends_on "libbluray" => :optional
-  depends_on "libsoxr" => :optional
-  depends_on "libquvi" => :optional
-  depends_on "libvidstab" => :optional
-  depends_on "x265" => :optional
-  depends_on "openssl" => :optional
-  depends_on "libssh" => :optional
+  depends_on "theora" => :optional
   depends_on "webp" => :optional
+  depends_on "x265" => :optional
   depends_on "zeromq" => :optional
-  depends_on "libbs2b" => :optional
-  depends_on "dcadec" => :optional
 
   def install
     # Fixes "dyld: lazy symbol binding failed: Symbol not found: _clock_gettime"

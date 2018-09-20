@@ -6,6 +6,7 @@ class Sccache < Formula
   head "https://github.com/mozilla/sccache.git"
 
   bottle do
+    sha256 "232e1af12684c02a086f8a937caae4140488153ff3d5be6ab2e30cd6aafdc3b4" => :mojave
     sha256 "5142c49377699e069a1332b4fb681fef05fff6ad406ea1e0596786fd4f192e76" => :high_sierra
     sha256 "e3687eef1ca2b74c95b48c2e3df2cc4d985afaf7fd454b9eab6b4837c1e9e24e" => :sierra
     sha256 "ea3758d1bfefaf31d085b8196b10d20248e5b7f2bada51457adf6efcf6411729" => :el_capitan
@@ -15,10 +16,12 @@ class Sccache < Formula
   depends_on "openssl"
 
   def install
-    ENV["OPENSSL_INCLUDE_DIR"] = Formula["openssl"].opt_include
-    ENV["OPENSSL_LIB_DIR"] = Formula["openssl"].opt_lib
+    # Ensure that the `openssl` crate picks up the intended library.
+    # https://crates.io/crates/openssl#manual-configuration
+    ENV["OPENSSL_DIR"] = Formula["openssl"].opt_prefix
 
-    system "cargo", "install", "--root", prefix, "--features", "all"
+    system "cargo", "install", "--root", prefix, "--path", ".",
+                               "--features", "all"
   end
 
   test do

@@ -21,6 +21,7 @@ class Audacious < Formula
   end
 
   bottle do
+    sha256 "e32b10763bb9ff68a632a6f5adfbd55f3884637dbdb892830ea77ab91d1446e0" => :mojave
     sha256 "facd97bdfb3935149d7c51035b38e3a1f7f3c7b705074eb75a1a795844bf739a" => :high_sierra
     sha256 "1acf6566b58d9ab31e088ed8e3f30aba30e171a32e0121f46f0f954a3871f7e9" => :sierra
     sha256 "c9238f08f8f9328ca7b427e2616698d6bea975b33fbcbe2e52c8a2f4b8f5b009" => :el_capitan
@@ -33,8 +34,8 @@ class Audacious < Formula
       url "https://github.com/audacious-media-player/audacious-plugins.git"
     end
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
@@ -55,25 +56,20 @@ class Audacious < Formula
   depends_on "libvorbis"
   depends_on "mpg123"
   depends_on "neon"
+  depends_on "python@2"
+  depends_on "qt"
   depends_on "sdl2"
   depends_on "wavpack"
-  depends_on "python@2"
-  depends_on "qt" => :recommended
-  depends_on "gtk+" => :optional
-  depends_on "jack" => :optional
-  depends_on "libmms" => :optional
-  depends_on "libmodplug" => :optional
 
   def install
     args = %W[
       --prefix=#{prefix}
       --disable-coreaudio
-      --enable-mac-media-keys
+      --disable-gtk
       --disable-mpris2
+      --enable-mac-media-keys
+      --enable-qt
     ]
-
-    args << "--enable-qt" if build.with? "qt"
-    args << "--disable-gtk" if build.without? "gtk+"
 
     system "./autogen.sh" if build.head?
     system "./configure", *args

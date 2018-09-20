@@ -6,6 +6,7 @@ class GnuplotAT4 < Formula
   revision 2
 
   bottle do
+    sha256 "3037a97469725cc72728cecbbdbf8c415258b58f67faac8cb9bc511750ebbfa4" => :mojave
     sha256 "27435780b2fd1a5aa6cae54d829758af3e67f09814e393af2a4b99ba7680be4f" => :high_sierra
     sha256 "22c1e2e18e582e43a234b4e4d98c1a332093d95c20b5bfd05cd74317c9bafaad" => :sierra
     sha256 "bf1eda673d961f221a4183993e966e6ff93818a2edb566b18e0d80f2cf0daed3" => :el_capitan
@@ -16,25 +17,20 @@ class GnuplotAT4 < Formula
   option "with-pdflib-lite", "Build the PDF terminal using pdflib-lite"
   option "with-wxmac", "Build the wxWidgets terminal using pango"
   option "with-cairo", "Build the Cairo based terminals"
-  option "without-lua@5.1", "Build without the lua/TikZ terminal"
-  option "with-test", "Verify the build with make check (1 min)"
-  option "without-emacs", "Do not build Emacs lisp files"
   option "with-aquaterm", "Build with AquaTerm support"
   option "with-x11", "Build with X11 support"
 
-  deprecated_option "without-lua" => "without-lua@5.1"
-
   depends_on "pkg-config" => :build
-  depends_on "lua@5.1" => :recommended
-  depends_on "gd" => :recommended
-  depends_on "readline"
-  depends_on "libpng"
-  depends_on "jpeg"
-  depends_on "libtiff"
   depends_on "fontconfig"
-  depends_on "pango" if (build.with? "cairo") || (build.with? "wxmac")
+  depends_on "gd"
+  depends_on "jpeg"
+  depends_on "libpng"
+  depends_on "libtiff"
+  depends_on "lua@5.1"
+  depends_on "readline"
   depends_on "pdflib-lite" => :optional
   depends_on "wxmac" => :optional
+  depends_on "pango" if (build.with? "cairo") || (build.with? "wxmac")
   depends_on :x11 => :optional
 
   def install
@@ -50,29 +46,24 @@ class GnuplotAT4 < Formula
       inreplace "configure", "-laquaterm", ""
     end
 
-    # Help configure find libraries
-    readline = Formula["readline"].opt_prefix
-    pdflib = Formula["pdflib-lite"].opt_prefix
-    gd = Formula["gd"].opt_prefix
-
     args = %W[
       --disable-dependency-tracking
       --disable-silent-rules
       --prefix=#{prefix}
-      --with-readline=#{readline}
+      --with-gd=#{Formula["gd"].opt_prefix}
+      --with-lispdir=#{elisp}
+      --with-readline=#{Formula["readline"].opt_prefix}
       --without-latex
     ]
 
+    pdflib = Formula["pdflib-lite"].opt_prefix
     args << "--with-pdf=#{pdflib}" if build.with? "pdflib-lite"
-    args << (build.with?("gd") ? "--with-gd=#{gd}" : "--without-gd")
 
     if build.without? "wxmac"
       args << "--disable-wxwidgets"
       args << "--without-cairo" if build.without? "cairo"
     end
 
-    args << "--without-lua" if build.without? "lua@5.1"
-    args << (build.with?("emacs") ? "--with-lispdir=#{elisp}" : "--without-lisp-files")
     args << (build.with?("aquaterm") ? "--with-aquaterm" : "--without-aquaterm")
     args << (build.with?("x11") ? "--with-x" : "--without-x")
 
@@ -85,7 +76,6 @@ class GnuplotAT4 < Formula
     system "./configure", *args
     ENV.deparallelize # or else emacs tries to edit the same file with two threads
     system "make"
-    system "make", "check" if build.with? "test"
     system "make", "install"
   end
 

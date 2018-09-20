@@ -1,6 +1,6 @@
 class Mapnik < Formula
   desc "Toolkit for developing mapping applications"
-  homepage "http://www.mapnik.org/"
+  homepage "https://mapnik.org/"
   url "https://github.com/mapnik/mapnik/releases/download/v3.0.20/mapnik-v3.0.20.tar.bz2"
   sha256 "77b9de029d59fbb7eebb7e5884dff03074eb4eeaa238e3f4c8ff5a61e01a9f04"
   revision 1
@@ -17,15 +17,15 @@ class Mapnik < Formula
   depends_on "boost"
   depends_on "freetype"
   depends_on "harfbuzz"
+  depends_on "icu4c"
+  depends_on "jpeg"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "proj"
-  depends_on "icu4c"
-  depends_on "jpeg"
   depends_on "webp"
+  depends_on "cairo" => :optional
   depends_on "gdal" => :optional
   depends_on "postgresql" => :optional
-  depends_on "cairo" => :optional
 
   needs :cxx11
 

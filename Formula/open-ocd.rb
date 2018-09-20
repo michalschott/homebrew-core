@@ -6,6 +6,7 @@ class OpenOcd < Formula
 
   bottle do
     rebuild 1
+    sha256 "5737d38a9129d824cd40116c4f678d1dd93cff4ae1de6177e4cedcb93d2b34cd" => :mojave
     sha256 "eab0153f54c97d4922386996d7517b6dc22c8e418b620ba42dd6f190fc0c48f7" => :high_sierra
     sha256 "281978e21362ed00dd198715825d77f0f2aeb64ad99954714a34ce128e1a0df8" => :sierra
     sha256 "e1fc5f8a8bf079954a56459b330313cd82a69a219114821c14f9d3df2fd3ea25" => :el_capitan
@@ -21,33 +22,22 @@ class OpenOcd < Formula
     depends_on "texinfo" => :build
   end
 
-  option "without-hidapi", "Disable building support for devices using HIDAPI (CMSIS-DAP)"
-  option "without-libftdi", "Disable building support for libftdi-based drivers (USB-Blaster, ASIX Presto, OpenJTAG)"
-  option "without-libusb",  "Disable building support for all other USB adapters"
-
   depends_on "pkg-config" => :build
-  depends_on "libusb" => :recommended
-  # some drivers are still not converted to libusb-1.0
-  depends_on "libusb-compat" if build.with? "libusb"
-  depends_on "libftdi" => :recommended
-  depends_on "hidapi" => :recommended
+  depends_on "hidapi"
+  depends_on "libftdi"
+  depends_on "libusb"
+  depends_on "libusb-compat"
 
   def install
-    # all the libusb and hidapi-based drivers are auto-enabled when
-    # the corresponding libraries are present in the system
-    args = %W[
-      --disable-dependency-tracking
-      --prefix=#{prefix}
-      --enable-dummy
-      --enable-buspirate
-      --enable-jtag_vpi
-      --enable-remote-bitbang
-    ]
-
     ENV["CCACHE"] = "none"
 
     system "./bootstrap", "nosubmodule" if build.head?
-    system "./configure", *args
+    system "./configure", "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "--enable-buspirate",
+                          "--enable-dummy",
+                          "--enable-jtag_vpi",
+                          "--enable-remote-bitbang"
     system "make", "install"
   end
 end

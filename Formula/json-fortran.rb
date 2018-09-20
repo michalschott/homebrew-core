@@ -7,18 +7,16 @@ class JsonFortran < Formula
 
   bottle do
     cellar :any
+    sha256 "849c80fbab8cfb26e0071058a52515c2f65b648286a62f8033ba45e0a8f8c391" => :mojave
     sha256 "3437332c2202e071910e8c6c16211f3df9e3cea332baa24faa3a59ff84b15bed" => :high_sierra
     sha256 "3be6757ac7c898fe087798c99a34ee2b0fd47538facefcc71cfb9608f42fca27" => :sierra
     sha256 "d639105a7407e9bf5d4353c09d5114d4173578bf0a4900253dd658b2fe5e9d92" => :el_capitan
   end
 
   option "with-unicode-support", "Build json-fortran to support unicode text in json objects and files"
-  option "without-docs", "Do not build and install FORD generated documentation for json-fortran"
-
-  deprecated_option "without-robodoc" => "without-docs"
 
   depends_on "cmake" => :build
-  depends_on "ford" => :build if build.with? "docs"
+  depends_on "ford" => :build
   depends_on "gcc" # for gfortran
 
   def install
@@ -26,7 +24,6 @@ class JsonFortran < Formula
       args = std_cmake_args
       args << "-DUSE_GNU_INSTALL_CONVENTION:BOOL=TRUE" # Use more GNU/Homebrew-like install layout
       args << "-DENABLE_UNICODE:BOOL=TRUE" if build.with? "unicode-support"
-      args << "-DSKIP_DOC_GEN:BOOL=TRUE" if build.without? "docs"
       system "cmake", "..", *args
       system "make", "install"
     end

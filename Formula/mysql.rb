@@ -5,6 +5,7 @@ class Mysql < Formula
   sha256 "99abae6660b53a462cff7c9fefb56d17f52823e9a964831aee1ae5633d9a2982"
 
   bottle do
+    sha256 "56bf45ecb466d8320771777d0924b7169af5a01e49666686072b5211c5d60cc9" => :mojave
     sha256 "963bbfbd11282a5dee036f5dafe93c4eb5d9a900e7063fcd883dad5bab826492" => :high_sierra
     sha256 "44e56ac21c0258735e906b6d01c18a562131b35e2e9d1b5d8f09677562b8b411" => :sierra
   end
@@ -21,12 +22,16 @@ class Mysql < Formula
   deprecated_option "with-tests" => "with-test"
 
   depends_on "cmake" => :build
-  depends_on "openssl"
+
+  # GCC is not supported either, so exclude for El Capitan.
+  depends_on :macos => :sierra if DevelopmentTools.clang_build_version == 800
 
   # https://github.com/Homebrew/homebrew-core/issues/1475
   # Needs at least Clang 3.6, which shipped alongside Yosemite.
   # Note: MySQL themselves don't support anything below Sierra.
   depends_on :macos => :yosemite
+
+  depends_on "openssl"
 
   # https://bugs.mysql.com/bug.php?id=86711
   # https://github.com/Homebrew/homebrew-core/pull/20538
@@ -34,8 +39,6 @@ class Mysql < Formula
     build 800
     cause "Wrong inlining with Clang 8.0, see MySQL Bug #86711"
   end
-  # GCC is not supported either, so exclude for El Capitan.
-  depends_on :macos => :sierra if DevelopmentTools.clang_build_version == 800
 
   conflicts_with "mysql-cluster", "mariadb", "percona-server",
     :because => "mysql, mariadb, and percona install the same binaries."

@@ -9,14 +9,15 @@ class Spidermonkey < Formula
 
   bottle do
     cellar :any
+    sha256 "2f0aefda519eaec139f47c54efe01b01c58883dbf1a0285f603c85635463f9f6" => :mojave
     sha256 "03c8a52da69c69fd7dba21cfb6fad8f3f95f6aa63b0fde61572c39124cbaea41" => :high_sierra
     sha256 "62193341691f6f35a1d844409c587b431aa7540b70c02d90451e2cb3623788de" => :sierra
     sha256 "5e7789a8ba4e3259364bd3ae827037ba83bf3a076633799bf8f5869b885db399" => :el_capitan
     sha256 "38d1b7f54b5dbdd4a0e28e3a1077aed2ada42a9266cfaddeda6a08d761a2d8b2" => :yosemite
   end
 
-  depends_on "readline"
   depends_on "nspr"
+  depends_on "readline"
 
   conflicts_with "narwhal", :because => "both install a js binary"
 

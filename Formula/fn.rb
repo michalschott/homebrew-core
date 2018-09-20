@@ -1,14 +1,15 @@
 class Fn < Formula
   desc "Command-line tool for the fn project"
-  homepage "https://fnproject.github.io"
-  url "https://github.com/fnproject/cli/archive/0.4.144.tar.gz"
-  sha256 "6705582b64be4b3eae5a361f8ae213ce2e135df931ecb8b327ee7888cef09534"
+  homepage "https://fnproject.io"
+  url "https://github.com/fnproject/cli/archive/0.5.2.tar.gz"
+  sha256 "cf5a1663ea5cc9400cb095a3546ac10bc102c01c91bf775cee78509b5d58f61e"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "5cd681b620f16da3393669ff16877d65bbe5fef6bd38868530938a337d86ada2" => :high_sierra
-    sha256 "210e8b6c9d2d1f27d4d9c05d5898e04022789a542ca51eb812ddbad3b96c2114" => :sierra
-    sha256 "1ad34622d26219e963f0d88e235e537add3817dac178e2f47924b7a38139a960" => :el_capitan
+    sha256 "432ea65ba00f2baaf7a3153b8ebfdfe007e35f2a8792ee731373f26eb944d7ff" => :mojave
+    sha256 "e1edcdb4a8b5c9c4005649be081a7660fdb11d6e96b974b1782c227ef8b734af" => :high_sierra
+    sha256 "44b635275c19c3c536308b8cecca9c2ab4cc0ffa848f29a5209c65dd55d173cb" => :sierra
+    sha256 "bcbb7cb95057c08c295dbeb28541c7e0a1819846fe3260df52a49f3689254a77" => :el_capitan
   end
 
   depends_on "dep" => :build
@@ -36,7 +37,7 @@ class Fn < Formula
     pid = fork do
       loop do
         socket = server.accept
-        response = '{"route": {"path": "/myfunc", "image": "fnproject/myfunc"} }'
+        response = '{"id":"01CQNY9PADNG8G00GZJ000000A","name":"myapp","created_at":"2018-09-18T08:56:08.269Z","updated_at":"2018-09-18T08:56:08.269Z"}'
         socket.print "HTTP/1.1 200 OK\r\n" \
                     "Content-Length: #{response.bytesize}\r\n" \
                     "Connection: close\r\n"
@@ -48,8 +49,8 @@ class Fn < Formula
     begin
       ENV["FN_API_URL"] = "http://localhost:#{port}"
       ENV["FN_REGISTRY"] = "fnproject"
-      expected = "/myfunc created with fnproject/myfunc"
-      output = shell_output("#{bin}/fn create routes myapp myfunc fnproject/myfunc:0.0.1")
+      expected = "Successfully created app:  myapp"
+      output = shell_output("#{bin}/fn create app myapp")
       assert_match expected, output.chomp
     ensure
       Process.kill("TERM", pid)

@@ -7,6 +7,7 @@ class Freeswitch < Formula
   head "https://freeswitch.org/stash/scm/fs/freeswitch.git"
 
   bottle do
+    sha256 "52f44a6e3713c7c5d47f4fc6a78416c7ddddfdf69ee23e7c2caef02f1e47733e" => :mojave
     sha256 "a44ff9765d3a79e6caf363f94c144ee62139320b274f70c56000d839dec618ad" => :high_sierra
     sha256 "52aa9f65dbcff17203256154422092c74195c795f50cb10b4c7182e4dcc1361b" => :sierra
     sha256 "f2d73136027050dc82f3ce4d9e6f131f07a6cf15fba1d2b02c2012eacd1cb525" => :el_capitan
@@ -17,21 +18,21 @@ class Freeswitch < Formula
   option "with-sounds-fr", "Install French (June) sounds"
   option "with-sounds-ru", "Install Russian (Elena) sounds"
 
+  depends_on "apr-util" => :build
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
-  depends_on "apr-util" => :build
   depends_on "yasm" => :build
   depends_on "jpeg"
-  depends_on "openssl"
-  depends_on "pcre"
-  depends_on "sqlite"
-  depends_on "lua"
-  depends_on "opus"
   depends_on "libsndfile"
+  depends_on "lua"
+  depends_on "openssl"
+  depends_on "opus"
+  depends_on "pcre"
   depends_on "speex"
   depends_on "speexdsp"
+  depends_on "sqlite"
 
   # https://github.com/Homebrew/homebrew/issues/42865
   fails_with :gcc

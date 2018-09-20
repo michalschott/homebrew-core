@@ -6,6 +6,7 @@ class Swftools < Formula
   revision 1
 
   bottle do
+    sha256 "2fa840ad38183d656158ae3055e776ed122df16b866e31125e3b9327a27198c4" => :mojave
     sha256 "2db933a79589905a67f36a9ea96a692a684c676d70b5299b087ae892195ff007" => :high_sierra
     sha256 "479570fcb99302996b55c361db1a6bb4a3abee611533b854fa350956f6b8cf61" => :sierra
     sha256 "7343a6c406b0374b460f1d814e5542372f85df5d6ee500759648084713e33174" => :el_capitan
@@ -17,9 +18,6 @@ class Swftools < Formula
   option "with-xpdf", "Build with PDF support"
 
   depends_on :x11 if build.with? "xpdf"
-  depends_on "jpeg" => :optional
-  depends_on "lame" => :optional
-  depends_on "fftw" => :optional
 
   resource "xpdf" do
     url "https://src.fedoraproject.org/repo/pkgs/xpdf/xpdf-3.04.tar.gz/3bc86c69c8ff444db52461270bef3f44/xpdf-3.04.tar.gz", :using => :nounzip

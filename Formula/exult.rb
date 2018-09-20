@@ -7,25 +7,19 @@ class Exult < Formula
 
   bottle do
     rebuild 1
+    sha256 "43967db7a4ff32b78f7478c920eeaf1c730a11952462d9b5bcc2d5b8ee27b932" => :mojave
     sha256 "642d16cef7ecf374ff50e10b32497f2744468010ee452e3e5819cc698215f8dc" => :high_sierra
     sha256 "01c7906864324d3ffe1ce9a11ba7bb60093c379e07d15aab2822e0bdd4789cc3" => :sierra
     sha256 "dcf630b85968a5f4a44f31de4dcc38727ed2d8dbfe3d2e645c585ea3adadfbba" => :el_capitan
   end
 
-  option "with-audio-pack", "Install audio pack"
-
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
-  depends_on "sdl2"
   depends_on "libogg"
   depends_on "libvorbis"
-
-  resource "audio" do
-    url "https://downloads.sourceforge.net/project/exult/exult-data/exult_audio.zip"
-    sha256 "72e10efa8664a645470ceb99f6b749ce99c3d5fd1c8387c63640499cfcdbbc68"
-  end
+  depends_on "sdl2"
 
   # Upstream's fix for recent clang (Xcode 9)
   # https://github.com/exult/exult/commit/083ea2fa
@@ -48,7 +42,6 @@ class Exult < Formula
     system "make", "EXULT_DATADIR=#{pkgshare}/data"
     system "make", "bundle"
     pkgshare.install "Exult.app/Contents/Resources/data"
-    (pkgshare/"data").install resource("audio") if build.with? "audio-pack"
     prefix.install "Exult.app"
     bin.write_exec_script "#{prefix}/Exult.app/Contents/MacOS/exult"
   end

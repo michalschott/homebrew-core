@@ -6,21 +6,22 @@ class Freedink < Formula
   revision 2
 
   bottle do
+    sha256 "0e4a3d4215290acc759285fe77b9b7a43ff009af962e5bd27a1d0f2030febe36" => :mojave
     sha256 "a85e4560ea7be49eddfe43af2f23cc3ad71a99c7c8aacf8a50f671af1a81777a" => :high_sierra
     sha256 "7af81b5a0bdcabd11a7fdd705b3c7bbc0a169513ec26a30b5c57ef82dcd45d97" => :sierra
     sha256 "69db51ab48473114449682010dfa7e03c992184a7fea6df1dd4e6c6a6e7ca72a" => :el_capitan
   end
 
+  depends_on "pkg-config" => :build
   depends_on "check"
-  depends_on "sdl2_image"
-  depends_on "sdl_mixer"
-  depends_on "sdl_ttf"
-  depends_on "sdl_gfx"
-  depends_on "sdl_image"
+  depends_on "fontconfig"
   depends_on "gettext"
   depends_on "libzip"
-  depends_on "fontconfig"
-  depends_on "pkg-config" => :build
+  depends_on "sdl2_image"
+  depends_on "sdl_gfx"
+  depends_on "sdl_image"
+  depends_on "sdl_mixer"
+  depends_on "sdl_ttf"
 
   resource "freedink-data" do
     url "https://ftp.gnu.org/gnu/freedink/freedink-data-1.08.20170409.tar.gz"

@@ -6,55 +6,26 @@ class Cppcheck < Formula
   head "https://github.com/danmar/cppcheck.git"
 
   bottle do
+    sha256 "f1a746cd9b65d7c4b69e14bf58e623caefc35d28c577306265a688cc2f2605c6" => :mojave
     sha256 "94fdbee6373e6a4f3102110b522be26e7b2b4a285f91115ba3a82a0d85643124" => :high_sierra
     sha256 "a6ced4322c5114c84999697cd1e07ebd50905a9ca9477398e46a359a6e0b7b8f" => :sierra
     sha256 "55c59fc078a4c2311ed7d4c1f048ae1114dbcf30956249441979e6bc91e7762b" => :el_capitan
   end
 
-  option "without-rules", "Build without rules (no pcre dependency)"
-  option "with-qt", "Build the cppcheck GUI (requires Qt)"
-
-  deprecated_option "no-rules" => "without-rules"
-  deprecated_option "with-gui" => "with-qt"
-  deprecated_option "with-qt5" => "with-qt"
-
-  depends_on "pcre" if build.with? "rules"
-  depends_on "qt" => :optional
+  depends_on "pcre"
 
   needs :cxx11
 
   def install
     ENV.cxx11
 
-    # Man pages aren't installed as they require docbook schemas.
-
-    # Pass to make variables.
-    if build.with? "rules"
-      system "make", "HAVE_RULES=yes", "CFGDIR=#{prefix}/cfg"
-    else
-      system "make", "HAVE_RULES=no", "CFGDIR=#{prefix}/cfg"
-    end
+    system "make", "HAVE_RULES=yes", "CFGDIR=#{prefix}/cfg"
 
     # CFGDIR is relative to the prefix for install, don't add #{prefix}.
     system "make", "DESTDIR=#{prefix}", "BIN=#{bin}", "CFGDIR=/cfg", "install"
 
     # Move the python addons to the cppcheck pkgshare folder
     (pkgshare/"addons").install Dir.glob(bin/"*.py")
-
-    if build.with? "qt"
-      cd "gui" do
-        if build.with? "rules"
-          system "qmake", "HAVE_RULES=yes",
-                          "INCLUDEPATH+=#{Formula["pcre"].opt_include}",
-                          "LIBS+=-L#{Formula["pcre"].opt_lib}"
-        else
-          system "qmake", "HAVE_RULES=no"
-        end
-
-        system "make"
-        prefix.install "cppcheck-gui.app"
-      end
-    end
   end
 
   test do

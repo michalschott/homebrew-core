@@ -1,33 +1,33 @@
 class Folly < Formula
   desc "Collection of reusable C++ library artifacts developed at Facebook"
   homepage "https://github.com/facebook/folly"
-  url "https://github.com/facebook/folly/archive/v2018.08.13.00.tar.gz"
-  sha256 "6bd356b7549c90c157b696d90b448ee5e42b3c8692e8650b0da41b9495a8abb2"
+  url "https://github.com/facebook/folly/archive/v2018.09.17.00.tar.gz"
+  sha256 "5dbbe34d3b08515784baf6a0fec334555f745f9f04656b4580affb0025bf2857"
   head "https://github.com/facebook/folly.git"
 
   bottle do
     cellar :any
-    sha256 "bc9e3acc0c7aa8220c4b77d73913afed93f9516b4527dbcf98205fd2293e72e4" => :high_sierra
-    sha256 "7916f446c83762fa04e696ef0e1a49a94540e203532ffa112347696d392ff0f6" => :sierra
-    sha256 "c4a9bf1cfcd9dfd9c8ac1539c235a505fe1f33aa2be06a408f2fc2a7e9b340cb" => :el_capitan
+    sha256 "c22e66e3e57689bb2986ce215028064fbf3ddd936b472fc268ddebe1dc4863e9" => :mojave
+    sha256 "5c75d93ec812bb505d03c16b031bce8ec142ad99d7c62d7a199439bf55df8596" => :high_sierra
+    sha256 "750b4967d14cb0d5fbad185564c86ebf398e23a7854e2a711a8f2145523a11dd" => :sierra
+    sha256 "634f4a5e54e86bbda9b43c932f834136d1ae7862a030148715b280918c3c9f84" => :el_capitan
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "libtool" => :build
+  depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "double-conversion"
-  depends_on "glog"
-  depends_on "gflags"
   depends_on "boost"
+  depends_on "double-conversion"
+  depends_on "gflags"
+  depends_on "glog"
   depends_on "libevent"
-  depends_on "xz"
-  depends_on "snappy"
   depends_on "lz4"
-  depends_on "openssl"
 
   # https://github.com/facebook/folly/issues/451
   depends_on :macos => :el_capitan
+
+  depends_on "openssl"
+  depends_on "snappy"
+  depends_on "xz"
 
   needs :cxx11
 
@@ -38,12 +38,23 @@ class Folly < Formula
   def install
     ENV.cxx11
 
-    cd "folly" do
-      system "autoreconf", "-fvi"
-      system "./configure", "--prefix=#{prefix}", "--disable-silent-rules",
-                            "--disable-dependency-tracking"
+    mkdir "_build" do
+      args = std_cmake_args + %w[
+        -DFOLLY_USE_JEMALLOC=OFF
+      ]
+
+      # Upstream issue 10 Jun 2018 "Build fails on macOS Sierra"
+      # See https://github.com/facebook/folly/issues/864
+      args << "-DCOMPILER_HAS_F_ALIGNED_NEW=OFF" if MacOS.version == :sierra
+
+      system "cmake", "..", *args, "-DBUILD_SHARED_LIBS=ON"
       system "make"
       system "make", "install"
+
+      system "make", "clean"
+      system "cmake", "..", *args, "-DBUILD_SHARED_LIBS=OFF"
+      system "make"
+      lib.install "libfolly.a", "folly/libfollybenchmark.a"
     end
   end
 

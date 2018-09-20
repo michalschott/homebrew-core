@@ -3,18 +3,20 @@ class UtilLinux < Formula
   homepage "https://github.com/karelzak/util-linux"
   url "https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.1.tar.xz"
   sha256 "86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2"
+  revision 1
 
   bottle do
     cellar :any
-    rebuild 1
-    sha256 "6efcade13c334a732e716ac6ce5779d23016fcc621a726af497b8a468620c680" => :high_sierra
-    sha256 "f08ce5604fe17b7d14d2dcca3902e7e01836368d41b3f05dd23a08fdb59bdd61" => :sierra
-    sha256 "ef8aea494486a2cb3c49c18a1772c596f12f4bed557cdbbec94639b279a4e969" => :el_capitan
+    sha256 "977cf2845acc9cdcbcf1b7e92d9c0af0066c5d0cc17df307a123c13180a64e62" => :mojave
+    sha256 "d551dad77ab8c533bab98d5bd91291db1f296564336d59d600f0ce75496a9d08" => :high_sierra
+    sha256 "aeef9c88dd7ea82ac3f71b6f3793b2316b76ee59a8e01cc56f6316efa4e1346c" => :sierra
+    sha256 "f3040a39ad4ffb9eabd9446843dfc3b66df01b3264c875dc68e7339636830357" => :el_capitan
   end
 
+  conflicts_with "rename", :because => "both install `rename` binaries"
+
   def install
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
+    system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
                           "--prefix=#{prefix}",
                           "--disable-ipcs",        # does not build on macOS
@@ -31,11 +33,6 @@ class UtilLinux < Formula
       rm_f sbin/prog
       rm_f man1/"#{prog}.1"
       rm_f man8/"#{prog}.8"
-      rm_f share/"bash-completion/completions/#{prog}"
-    end
-
-    # these conflict with bash-completion-1.3
-    %w[chsh mount rfkill rtcwake].each do |prog|
       rm_f share/"bash-completion/completions/#{prog}"
     end
 

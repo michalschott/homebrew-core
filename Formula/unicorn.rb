@@ -7,33 +7,21 @@ class Unicorn < Formula
 
   bottle do
     cellar :any
+    sha256 "b873f9b4fcec5aceac0cc978e75f6d82bc133f78fbe3509bab2b8674e1c58d5b" => :mojave
     sha256 "a12e18a0a334fa19a2dc54a43fc5d56861e31cf5a9ad352cb1150bb6ec61703c" => :high_sierra
     sha256 "81d29e7f28335317dd40976d904636ccd7d0679b71747ad13530dc991f327122" => :sierra
     sha256 "3519d8189333c5ae43eb618e18db7b6be4cf9cc288c6a45ca3b618964d62395c" => :el_capitan
     sha256 "f8c7cb546985c5e34dddb2c2e338314d024e266085fcbdc3f7e52e0f426e4e29" => :yosemite
   end
 
-  option "with-all", "Build with support for ARM64, Motorola 64k, PowerPC and "\
-    "SPARC"
-  option "with-debug", "Create a debug build"
-  option "with-test", "Test build"
-
   depends_on "pkg-config" => :build
-  depends_on "cmocka" => :build if build.with? "test"
 
   def install
-    archs  = %w[x86 x86_64 arm mips]
-    archs += %w[aarch64 m64k ppc sparc] if build.with?("all")
     ENV["PREFIX"] = prefix
-    ENV["UNICORN_ARCHS"] = archs.join " "
+    ENV["UNICORN_ARCHS"] = "x86 x86_64 arm mips aarch64 m64k ppc sparc"
     ENV["UNICORN_SHARED"] = "yes"
-    if build.with?("debug")
-      ENV["UNICORN_DEBUG"] = "yes"
-    else
-      ENV["UNICORN_DEBUG"] = "no"
-    end
+    ENV["UNICORN_DEBUG"] = "no"
     system "make"
-    system "make", "test" if build.with?("test")
     system "make", "install"
   end
 

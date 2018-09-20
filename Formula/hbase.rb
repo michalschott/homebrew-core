@@ -5,20 +5,21 @@ class Hbase < Formula
   sha256 "3bfa55c0b2b1327cb4382c1a51dddd21a536ccbbfdbcc31e9b6f403fe21230ad"
 
   bottle do
+    sha256 "ad2f8a6edee755254654904724c08c05bc9f05f82432b0b69022723624b13de8" => :mojave
     sha256 "3c4084898091f6b811062aff85f2d5dcef422d720b21e60b0554a24ac611e0d9" => :high_sierra
     sha256 "e2102bd08b2d94f5ac4d33938cdc76166bd085c9657f6f2ebcff47bbf3d3fd85" => :sierra
     sha256 "72240c500dda738b40241eba7c157bdcb4e1a5cdec79b85fb74cbccebb02bef3" => :el_capitan
   end
 
-  depends_on :java => "1.8"
-  depends_on "hadoop" => :optional
-  depends_on "lzo"
   depends_on "ant" => :build
-  depends_on :arch => :x86_64
   # 64 bit is required because of three things:
   # the lzo jar has a native extension
   # building native extensions requires a version of java that matches the architecture
   # there is no 32 bit version of java for macOS since Java 1.7, and 1.8 is required for hbase
+  depends_on :arch => :x86_64
+  depends_on :java => "1.8"
+  depends_on "lzo"
+  depends_on "hadoop" => :optional
 
   resource "hadoop-lzo" do
     url "https://github.com/cloudera/hadoop-lzo/archive/0.4.14.tar.gz"

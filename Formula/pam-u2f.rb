@@ -7,16 +7,17 @@ class PamU2f < Formula
 
   bottle do
     cellar :any
+    sha256 "ed80bbd945c357cf4cd184fb97a742f975cbd49f10eee7ab78bea19a13dd0d63" => :mojave
     sha256 "aeea6df4ee9fd8a1625a15aa5a1d1a09429cf4b48c697e0a423dd9874c4b868e" => :high_sierra
     sha256 "873567775f9cf3a1d87c8dcc93d7a5cf1d41e536595b8b2e2b3bca12eed1e595" => :sierra
     sha256 "10730971bc1100e4288204cec75f3115235e0cbbaef19f8acad1ddf9a4aeb0d2" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
-  depends_on "libtool" => :build
+  depends_on "asciidoc" => :build
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "asciidoc" => :build
+  depends_on "libtool" => :build
+  depends_on "pkg-config" => :build
   depends_on "libu2f-host"
   depends_on "libu2f-server"
 

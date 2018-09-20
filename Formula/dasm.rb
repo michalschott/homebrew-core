@@ -3,11 +3,12 @@ class Dasm < Formula
   homepage "https://dasm-dillon.sourceforge.io/"
   url "https://downloads.sourceforge.net/project/dasm-dillon/dasm-dillon/2.20.11/dasm-2.20.11-2014.03.04-source.tar.gz"
   sha256 "a9330adae534aeffbfdb8b3ba838322b92e1e0bb24f24f05b0ffb0a656312f36"
-  head "https://svn.code.sf.net/p/dasm-dillon/code/trunk"
+  head "http://svn.code.sf.net/p/dasm-dillon/code/trunk"
 
   bottle do
     cellar :any_skip_relocation
     rebuild 1
+    sha256 "d68b6f9a2a30a76f13fa1c38bb1855174e1f9dd7c9feff0f7336edd8a599e6e0" => :mojave
     sha256 "8df31a4bcc48b92ee2569994dda6a5bd55335a0e92e1e19903a2c98377b440d1" => :high_sierra
     sha256 "7425679bdb695c12ca174ca4f17e187a9a9aa5a92e7fe72bf8a561dd83aff4a7" => :sierra
     sha256 "854a19f232cffdeabb1cb2afef4a5713e55b545519beea8f666f2cc4882d42e6" => :el_capitan

@@ -9,6 +9,7 @@ class MecabIpadic < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "30967b4167d34f05c79f185d71a40198fff4067d0cce82aed59383548c898681" => :mojave
     sha256 "ef5cf167b05fd74457d5c31a46750450e8f80720ebc705766ee10df6ed41a861" => :high_sierra
     sha256 "33f42c18d7347708a56d8846c0bde5c8291b7685ce06b342e96442bca35f6663" => :sierra
     sha256 "9f0ae0a62141e3b28807349cb7a9560e36770acb869f4a4e7a54ea1a28ef8ba5" => :el_capitan
@@ -17,22 +18,16 @@ class MecabIpadic < Formula
     sha256 "c70d627c447086a66b6eaca37cd98e1da099f65bfb6b87f2c47d1901d5e4a090" => :mountain_lion
   end
 
-  # Via ./configure --help, valid choices are utf8 (default), euc-jp, sjis
-  option "with-charset=", "Select charset: utf8 (default), euc-jp, or sjis"
-
-  deprecated_option "charset=" => "with-charset="
-
   depends_on "mecab"
 
   link_overwrite "lib/mecab/dic"
 
   def install
-    charset = ARGV.value("with-charset") || "utf8"
     args = %W[
       --disable-debug
       --disable-dependency-tracking
       --prefix=#{prefix}
-      --with-charset=#{charset}
+      --with-charset=utf8
       --with-dicdir=#{lib}/mecab/dic/ipadic
     ]
 

@@ -5,30 +5,31 @@ class GnomeBuilder < Formula
   sha256 "05281f01e66fde8fcd89af53709053583cf74d0ae4ac20b37185664f25396b45"
 
   bottle do
+    sha256 "1bde6ecb92fb4a42b3de47323b4efe1a5234aee985f40721e0bc9b59b8a7e839" => :mojave
     sha256 "b2068860adae8eee244a324fba083aa3bfdefef7962c894c320741802f199ad3" => :high_sierra
     sha256 "f0f008cab0a9c58973980c8386b9bf76e1305aa8d934d98b5916b861251fc87d" => :sierra
     sha256 "4845a2b8a31cd6eeca400f5216aa806a3521f4640ddf6957de89646cc86abe06" => :el_capitan
   end
 
   depends_on "gobject-introspection" => :build
-  depends_on "pkg-config" => :build
   depends_on "meson-internal" => :build
   depends_on "ninja" => :build
+  depends_on "pkg-config" => :build
   depends_on "python" => :build
+  depends_on "adwaita-icon-theme"
   depends_on "dbus"
+  depends_on "gspell"
   depends_on "gtk+3"
-  depends_on "libdazzle"
   depends_on "gtksourceview3"
+  depends_on "hicolor-icon-theme"
   depends_on "json-glib"
   depends_on "jsonrpc-glib"
-  depends_on "template-glib"
-  depends_on "libpeas"
-  depends_on "vte3"
-  depends_on "libxml2"
+  depends_on "libdazzle"
   depends_on "libgit2-glib"
-  depends_on "gspell"
-  depends_on "hicolor-icon-theme"
-  depends_on "adwaita-icon-theme"
+  depends_on "libpeas"
+  depends_on "libxml2"
+  depends_on "template-glib"
+  depends_on "vte3"
 
   # fix sandbox violation and remove unavailable linker option
   patch :DATA

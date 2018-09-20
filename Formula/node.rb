@@ -1,27 +1,25 @@
 class Node < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v10.8.0/node-v10.8.0.tar.xz"
-  sha256 "97bb21718228fd801c8355c842e764eefda888d3a87de8eb04315c74f546b9bc"
+  url "https://nodejs.org/dist/v10.10.0/node-v10.10.0.tar.xz"
+  sha256 "860eff976d83dd619849c0b4fab4cadb093ece2c718aaa5af8fb5ebbfa7d8a80"
   head "https://github.com/nodejs/node.git"
 
   bottle do
-    sha256 "5f9325b4556d4874fb8b917f1e5a9b7f6cdc224b8d683387065577dc41a6020e" => :high_sierra
-    sha256 "17d515210e284aaed53d97765a1932026dbe967304f3101f3e2d2d4b896d5ac2" => :sierra
-    sha256 "f3f9dd0a91bbd765ae4ed88d72dbedf88b3cffec4e4978e2143f7d7b20f874dd" => :el_capitan
+    sha256 "a6c8d5007d734ffa25922f7214f5b73a1d7200dd3c412dae9e59327b3f892ef8" => :mojave
+    sha256 "21f384054a39f93a59273e80634479186b2f0503903a159e38e97ccf5af8b5d2" => :high_sierra
+    sha256 "ca520408b75b7a402576d43a90702c435aa03b18a0e22a05b671528437459bf3" => :sierra
+    sha256 "bbe4bcb3fe146e44d16433c5fe1d0f805f9e3f4b7b6f749a2883b7958146c057" => :el_capitan
   end
 
-  option "with-debug", "Build with debugger hooks"
   option "with-openssl@1.1", "Build against Homebrew's OpenSSL instead of the bundled OpenSSL"
   option "without-npm", "npm will not be installed"
-  option "without-completion", "npm bash completion will not be installed"
   option "without-icu4c", "Build with small-icu (English only) instead of system-icu (all locales)"
 
-  deprecated_option "enable-debug" => "with-debug"
   deprecated_option "with-openssl" => "with-openssl@1.1"
 
-  depends_on "python@2" => :build
   depends_on "pkg-config" => :build
+  depends_on "python@2" => :build
   depends_on "icu4c" => :recommended
   depends_on "openssl@1.1" => :optional
 
@@ -36,15 +34,14 @@ class Node < Formula
   # We track major/minor from upstream Node releases.
   # We will accept *important* npm patch releases when necessary.
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-6.2.0.tgz"
-    sha256 "c40214b4181c50f8390c6c5a692438381054bf319062a36ef52f540599b1935f"
+    url "https://registry.npmjs.org/npm/-/npm-6.4.1.tgz"
+    sha256 "a48e0b4471d72936afb598ebde0e07076598ac8647c2e9ebe891db5d6fbf2952"
   end
 
   def install
     # Never install the bundled "npm", always prefer our
     # installation from tarball for better packaging control.
     args = %W[--prefix=#{prefix} --without-npm]
-    args << "--debug" if build.with? "debug"
     args << "--with-intl=system-icu" if build.with? "icu4c"
     args << "--shared-openssl" << "--openssl-use-def-ca-store" if build.with? "openssl@1.1"
     args << "--tag=head" if build.head?
@@ -68,10 +65,7 @@ class Node < Formula
       # These symlinks are never used & they've caused issues in the past.
       rm_rf libexec/"share"
 
-      if build.with? "completion"
-        bash_completion.install \
-          bootstrap/"lib/utils/completion.sh" => "npm"
-      end
+      bash_completion.install bootstrap/"lib/utils/completion.sh" => "npm"
     end
   end
 

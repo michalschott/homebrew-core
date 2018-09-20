@@ -1,15 +1,17 @@
 class Root < Formula
   desc "Object oriented framework for large scale data analysis"
   homepage "https://root.cern.ch"
-  url "https://root.cern.ch/download/root_v6.14.02.source.tar.gz"
-  version "6.14.02"
-  sha256 "93816519523e87ac75924178d87112d1573eaa108fc65691aea9a9dd5bc05b3e"
+  url "https://root.cern.ch/download/root_v6.14.04.source.tar.gz"
+  version "6.14.04"
+  sha256 "463ec20692332a422cfb5f38c78bedab1c40ab4d81be18e99b50cf9f53f596cf"
+  revision 1
   head "http://root.cern.ch/git/root.git"
 
   bottle do
-    sha256 "735843cdf42536af424d90471cba12e4834f42b728b40b2d170b6dc13dd863c1" => :high_sierra
-    sha256 "d77502bde56a1b0aa8c2d2f8b249f730c77d92c9d3729cbaf6a721052a6ad669" => :sierra
-    sha256 "7b3f1c52f9aa32d8e7c47376b1ae74b09e94df9030c10e4bc87d8e556298fdc6" => :el_capitan
+    sha256 "10129cdf37ee001b5ec7f418f9aa11bcee5d61d75816a4cd900b1af9a7cb1231" => :mojave
+    sha256 "bbe2c2cb2ed2ce888ea9e91f66f51c0a7b4da17e5db6a90a6a6db6d6d3aa5bcd" => :high_sierra
+    sha256 "ddf5a388eeb9c7403e0893aa2aa150e886fe2896ca5287de6bbab657dfe4b276" => :sierra
+    sha256 "e097c9f46de1791e40746db0445182c9190e6fddcad4441212948e751f1d5f0e" => :el_capitan
   end
 
   depends_on "cmake" => :build
@@ -43,12 +45,6 @@ class Root < Formula
 
   skip_clean "bin"
 
-  # Upstream commit from 30 Jun 2018 "Fixes for Python 3.7"
-  patch do
-    url "https://github.com/root-project/root/commit/94412f7eab8.patch?full_index=1"
-    sha256 "29a719b00931381cbe75b0e23c5e970d03aa28a8455a5f840e82a8cae83d9c24"
-  end
-
   def install
     # Work around "error: no member named 'signbit' in the global namespace"
     ENV.delete("SDKROOT") if DevelopmentTools.clang_build_version >= 900
@@ -79,6 +75,7 @@ class Root < Formula
       -Dssl=ON
       -Dimt=ON
       -Dxrootd=ON
+      -Dtmva=ON
     ]
 
     if build.with?("python") && build.with?("python@2")

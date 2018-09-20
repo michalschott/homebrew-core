@@ -6,6 +6,7 @@ class Couchdb < Formula
   revision 7
 
   bottle do
+    sha256 "20e1f4146f06e6f5bc723d1f2edbb62bc4a526ef39996bf0a2523575763ec492" => :mojave
     sha256 "803e0a8c0cc29f24f2316e7fa2e171a23c854dcbf27860ce33b1fd759b10baa1" => :high_sierra
     sha256 "eac5e94502da04ebabca49e93dcfa655b09f2a6c206dddec05ba81d388f4a635" => :sierra
     sha256 "9c1c036dbdbd2c4ef0c674307862a34f307a07c562d6afea8019eefbb1201c07" => :el_capitan
@@ -15,18 +16,18 @@ class Couchdb < Formula
     url "https://github.com/apache/couchdb.git"
 
     depends_on "autoconf" => :build
-    depends_on "automake" => :build
-    depends_on "libtool" => :build
     depends_on "autoconf-archive" => :build
-    depends_on "pkg-config" => :build
+    depends_on "automake" => :build
     depends_on "help2man" => :build
+    depends_on "libtool" => :build
+    depends_on "pkg-config" => :build
   end
 
   option "with-geocouch", "Build with GeoCouch spatial index extension"
 
   depends_on "erlang@19"
-  depends_on "spidermonkey"
   depends_on "icu4c"
+  depends_on "spidermonkey"
 
   resource "geocouch" do
     url "https://github.com/couchbase/geocouch/archive/couchdb1.3.x.tar.gz"

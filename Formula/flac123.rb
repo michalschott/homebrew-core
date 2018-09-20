@@ -6,6 +6,7 @@ class Flac123 < Formula
 
   bottle do
     cellar :any
+    sha256 "c1aa5158e16136453e09b384480a6aa4faaefc818c14243a0c4b5359cdab2fb4" => :mojave
     sha256 "ac4ee518533f4b043fd380d0ed6e2077ec410c16acdf952b733df533a4750889" => :high_sierra
     sha256 "f62d8e1f08e8cd5d952f02a35ebcdc921a1295035a2b66e843d80aacb8d9843e" => :sierra
     sha256 "669b5ff8922496fe8abe8b020ef92118847539095a0d281f73b85e965be1f708" => :el_capitan
@@ -14,8 +15,8 @@ class Flac123 < Formula
     sha256 "4f76ae1d865f10de27f44c57242178c06ffb33017ac3646a4dd2115fc2882c61" => :mountain_lion
   end
 
-  depends_on "automake" => :build
   depends_on "autoconf" => :build
+  depends_on "automake" => :build
 
   depends_on "flac"
   depends_on "libao"

@@ -7,18 +7,19 @@ class Rpm < Formula
   version_scheme 1
 
   bottle do
+    sha256 "80802434ab18123370e3391032525acc7c4394a7cd88073a4673bebf2f921ae0" => :mojave
     sha256 "aa36aca65587fc561e2b4ca98577f14d4dfeab2e9122c64c0a29552986eda636" => :high_sierra
     sha256 "3b312cf702cbc80bb709bc93a8385154e188b42640cee17c875f9da755ad15da" => :sierra
     sha256 "1ec620b4d0063e71f35d9812d0862fbd42d7711beb08859f60c33f99f31d631c" => :el_capitan
   end
 
-  depends_on "pkg-config"
   depends_on "berkeley-db"
   depends_on "gettext"
   depends_on "libarchive"
   depends_on "libmagic"
   depends_on "lua@5.1"
   depends_on "openssl"
+  depends_on "pkg-config"
   depends_on "popt"
   depends_on "xz"
   depends_on "zstd"

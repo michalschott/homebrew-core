@@ -6,6 +6,7 @@ class Pianod < Formula
   revision 1
 
   bottle do
+    sha256 "01b47d23674efaf3ddefced7f4dfee0db683d956ea455ebd9a8bd0e8f3cf7d9d" => :mojave
     sha256 "d0aa3614b2b70ca8140820bd059c1ebdbb54799b69ab6346f36a42a4dac600de" => :high_sierra
     sha256 "fe7983c06b7fe6163792e7e0eeed5990b9d09e44ffc19d0c62808503ca409f5f" => :sierra
     sha256 "3ed572ebaf767ba924cc7b402362775b77a19cd69337f940344988f86d2a1936" => :el_capitan
@@ -13,10 +14,10 @@ class Pianod < Formula
 
   depends_on "pkg-config" => :build
 
-  depends_on "libao"
-  depends_on "libgcrypt"
   depends_on "gnutls"
   depends_on "json-c"
+  depends_on "libao"
+  depends_on "libgcrypt"
   depends_on "faad2" => :recommended
   depends_on "mad" => :recommended
 

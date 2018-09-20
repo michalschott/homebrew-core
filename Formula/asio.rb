@@ -7,24 +7,21 @@ class Asio < Formula
 
   bottle do
     cellar :any
+    sha256 "49e8f4686ca26f77e22ffc4ef9fe5715b402bb14bdc118c87a9bfe0a3e0f348c" => :mojave
     sha256 "65892f6827794887cb8ace02435bdbce35e213b74e3c8acfc157a9f5ef41f239" => :high_sierra
     sha256 "6564529f098c6f936c7b57aaf562c396f89bc4e8b13018b1bf395502616b4b92" => :sierra
     sha256 "fbb2170a86dcb1af7b899e0a877dd5351ae891abf3a3bc82e0afc7ce3b5dfa24" => :el_capitan
   end
 
-  option "with-boost-coroutine", "Use Boost.Coroutine to implement stackful coroutines"
-
   depends_on "autoconf" => :build
   depends_on "automake" => :build
 
-  depends_on "boost" => :optional
-  depends_on "boost" if build.with?("boost-coroutine")
   depends_on "openssl"
 
-  needs :cxx11 if build.without? "boost"
+  needs :cxx11
 
   def install
-    ENV.cxx11 if build.without? "boost"
+    ENV.cxx11
 
     if build.head?
       cd "asio"
@@ -32,15 +29,11 @@ class Asio < Formula
     else
       system "autoconf"
     end
-    args = %W[
-      --disable-dependency-tracking
-      --disable-silent-rules
-      --prefix=#{prefix}
-      --with-boost=#{(build.with?("boost") || build.with?("boost-coroutine")) ? Formula["boost"].opt_include : "no"}
-    ]
-    args << "--enable-boost-coroutine" if build.with? "boost-coroutine"
 
-    system "./configure", *args
+    system "./configure", "--disable-dependency-tracking",
+                          "--disable-silent-rules",
+                          "--prefix=#{prefix}",
+                          "--with-boost=no"
     system "make", "install"
     pkgshare.install "src/examples"
   end

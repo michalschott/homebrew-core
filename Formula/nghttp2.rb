@@ -1,20 +1,21 @@
 class Nghttp2 < Formula
   desc "HTTP/2 C Library"
   homepage "https://nghttp2.org/"
-  url "https://github.com/nghttp2/nghttp2/releases/download/v1.32.0/nghttp2-1.32.0.tar.xz"
-  sha256 "700a89d59fcc55acc2b18184001bfb3220fa6a6e543486aca35f40801cba6f7d"
+  url "https://github.com/nghttp2/nghttp2/releases/download/v1.33.0/nghttp2-1.33.0.tar.xz"
+  sha256 "4879ce9ff3320f5344b910ee1c46ed5e366edc2272620cf17d8e762724d7df1e"
 
   bottle do
-    sha256 "cd337b391fc2e5cd72bb3ce098386d6fd7d4d161179ce752e85fc41e23893556" => :high_sierra
-    sha256 "4dd6b26912e4aa678fadfe93f0c1eb5816731897bd4b11ec1ef72eafb9afba13" => :sierra
-    sha256 "1263885aed89fa20026d040df3262d987aa336f6ac0ad18273f7566d20815d23" => :el_capitan
+    sha256 "a0a79d8de3450162bf674dcf8a6dec4f293f814542ea6c3499401988eab5fe6e" => :mojave
+    sha256 "d3c1efec430bbb8ac88ac24583100a561018a5b80039208478e781f8aceaf1e8" => :high_sierra
+    sha256 "a94cbf23943a9892a100227a68aa29c3164d4a16219fb8c76e0752f43a864f58" => :sierra
+    sha256 "3988e15fb6b5392e5c57f2b6cd710309afc065675892fca42b9b9aac075c5a18" => :el_capitan
   end
 
   head do
     url "https://github.com/nghttp2/nghttp2.git"
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
@@ -23,18 +24,18 @@ class Nghttp2 < Formula
 
   deprecated_option "with-python3" => "with-python"
 
-  depends_on "python" => :optional
-  depends_on "sphinx-doc" => :build
-  depends_on "libxml2" if MacOS.version <= :lion
-  depends_on "pkg-config" => :build
   depends_on "cunit" => :build
-  depends_on "c-ares"
-  depends_on "libev"
-  depends_on "openssl"
-  depends_on "libevent"
-  depends_on "jansson"
+  depends_on "pkg-config" => :build
+  depends_on "sphinx-doc" => :build
   depends_on "boost"
+  depends_on "c-ares"
+  depends_on "jansson"
+  depends_on "libev"
+  depends_on "libevent"
+  depends_on "libxml2" if MacOS.version <= :lion
+  depends_on "openssl"
   depends_on "jemalloc" => :recommended
+  depends_on "python" => :optional
 
   resource "Cython" do
     url "https://files.pythonhosted.org/packages/79/9d/dea8c5181cdb77d32e20a44dd5346b0e4bac23c4858f2f66ad64bbcf4de8/Cython-0.28.2.tar.gz"

@@ -32,6 +32,7 @@ class Qca < Formula
 
   bottle do
     rebuild 1
+    sha256 "b1232ad866b1e40e28a3f84674570741c0f9f8356ca43ead89574b00306f1875" => :mojave
     sha256 "7fca5c9a591a204813356e3314077a628cbbff1cb5e6669355a2e26cd92765aa" => :high_sierra
     sha256 "8dd6479be1f5cacb740915646bf9dd2fb8103df38e9f75ecfbb507ed3a0b201e" => :sierra
     sha256 "7790fd8de8b6ee98ca8d4f687894437137d774538c209a80a340f513a8fbc159" => :el_capitan
@@ -41,15 +42,15 @@ class Qca < Formula
 
   deprecated_option "with-gpg2" => "with-gnupg"
 
+  # commented dep = plugin
+  # (QCA needs at least one plugin to do anything useful)
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "qt"
-
-  # Plugins (QCA needs at least one plugin to do anything useful)
   depends_on "openssl" # qca-ossl
+  depends_on "qt"
   depends_on "botan" => :optional # qca-botan
-  depends_on "libgcrypt" => :optional # qca-gcrypt
   depends_on "gnupg" => :optional # qca-gnupg
+  depends_on "libgcrypt" => :optional # qca-gcrypt
   depends_on "nss" => :optional # qca-nss
   depends_on "pkcs11-helper" => :optional # qca-pkcs11
 

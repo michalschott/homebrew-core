@@ -7,14 +7,15 @@ class Mpich < Formula
   revision 2
 
   bottle do
+    sha256 "542cba2c9d17bdf0bb10f67180970b411b9043287b9773ba8a63f8fda2883ef3" => :mojave
     sha256 "5c3b8952de7a07098e19a032fc183f7dc5ea27e6cd70d01c2f620fcbb1031ad7" => :high_sierra
     sha256 "835787746d5851c0e43b19ebf762d1afbcc0e8ad6df38288c3f1bccedd04fd89" => :sierra
     sha256 "38ceb721bb800c6a375646c186646c0de4e34a270604bf58e87ad6896643a0c4" => :el_capitan
   end
 
   devel do
-    url "https://www.mpich.org/static/downloads/3.3b1/mpich-3.3b1.tar.gz"
-    sha256 "f0c822ac48ee01037ec63ec882a945b0730cea6e2f28f262624983e51a983c98"
+    url "https://www.mpich.org/static/downloads/3.3b3/mpich-3.3b3.tar.gz"
+    sha256 "73a881c065f798a47a7db1e0ad34ad16c4cb73bf7ebf34c97618aac152c416bf"
   end
 
   head do

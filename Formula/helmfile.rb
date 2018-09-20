@@ -1,14 +1,15 @@
 class Helmfile < Formula
   desc "Deploy Kubernetes Helm Charts"
   homepage "https://github.com/roboll/helmfile"
-  url "https://github.com/roboll/helmfile/archive/v0.21.0.tar.gz"
-  sha256 "75503bd10fbff95fa5c4d84ef2aff8f62774eeec2d5a73d1025271883cd330f2"
+  url "https://github.com/roboll/helmfile/archive/v0.35.0.tar.gz"
+  sha256 "b1aac3943ae03e06a248a05f95023d3d4fa02206555741726fddd1d27eaa34ca"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "475db028fdce313b9546069929a092c5ad7c322ad4f1e067da6341c9bbf94b73" => :high_sierra
-    sha256 "d294b4b24b638cbe8be50b74c13c71d214a8b57926b7dc042acc0793c1dee2ba" => :sierra
-    sha256 "cb297ed4c9b8536ed35df937332b2cc826e3ff149102df36016f933ab7b13b37" => :el_capitan
+    sha256 "6efdb1ed560e076d86c9255e9099639a6c5f1a9625b075ee9dee3d8ee8700f6c" => :mojave
+    sha256 "87859c9ce3be93aa602bb1de557ca8eac6d345b6072e5c74abbd5c2c3e288382" => :high_sierra
+    sha256 "4d9eda9e1803df3eae36f3bb74e6684772ddf634ddd50b9073bbde8b0a542115" => :sierra
+    sha256 "58c159d0dd281d030f8ceea56d6419ccd9e3a8871bdc839f321c685ccd42fb12" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -26,9 +27,12 @@ class Helmfile < Formula
 
   test do
     (testpath/"helmfile.yaml").write <<-EOS
-      repositories:
-      - name: stable
-        url: https://kubernetes-charts.storage.googleapis.com/
+    repositories:
+    - name: stable
+      url: https://kubernetes-charts.storage.googleapis.com/
+
+    releases:
+    - name: test
     EOS
     system Formula["kubernetes-helm"].opt_bin/"helm", "init", "--client-only"
     output = '"stable" has been added to your repositories'

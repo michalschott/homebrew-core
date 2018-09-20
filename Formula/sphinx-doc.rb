@@ -1,14 +1,15 @@
 class SphinxDoc < Formula
   desc "Tool to create intelligent and beautiful documentation"
   homepage "http://sphinx-doc.org"
-  url "https://files.pythonhosted.org/packages/eb/3c/702e89ad33529c0107d44ebc1a7eca97c4fd77ae2784060923a65864fcbd/Sphinx-1.7.6.tar.gz"
-  sha256 "217ad9ece2156ed9f8af12b5d2c82a499ddf2c70a33c5f81864a08d8c67b9efc"
+  url "https://files.pythonhosted.org/packages/52/f2/eb65961b97479eec6f89f53572113cb8bd5df70ed93c50a630a5b1bf5598/Sphinx-1.8.0.tar.gz"
+  sha256 "95acd6648902333647a0e0564abdb28a74b0a76d2333148aa35e5ed1f56d3c4b"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "9e73f7074aa832595fc653d1756ddee32398e7a7dc201cdc313a9a992df2cfe6" => :high_sierra
-    sha256 "711334da18471a31324cbdff175c7e95a82aef78a69488b896194188f5f23017" => :sierra
-    sha256 "2767442b385b50334d19e3b9e808e196495236f6df6e538e10cf33427b49519c" => :el_capitan
+    sha256 "2867e566cb8dd9a9e76d62ec34e9a0ba55f406b81d81e01169cbbd9427dc09a2" => :mojave
+    sha256 "f6b4ce4f8e2c33f641e38438ddeba4b2c0964fb1726c6085fe42889194bf3fc9" => :high_sierra
+    sha256 "88fb81c1d2acfdbe4813060e2a2688ffd15e1e770f7623561f39c4ca838f524e" => :sierra
+    sha256 "cc5a262cd6cf845c2d5012a525c962544fa9e5ea11743aeff17be202c9ffaef3" => :el_capitan
   end
 
   keg_only <<~EOS
@@ -20,8 +21,8 @@ class SphinxDoc < Formula
 
   # generated from sphinx, setuptools, numpydoc and python-docs-theme
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/d3/3e/1d74cdcb393b68ab9ee18d78c11ae6df8447099f55fe86ee842f9c5b166c/setuptools-40.0.0.zip"
-    sha256 "012adb8e25fbfd64c652e99e7bab58799a3aaf05d39ab38561f69190a909015f"
+    url "https://files.pythonhosted.org/packages/ef/1d/201c13e353956a1c840f5d0fbf0461bd45bbd678ea4843ebf25924e8984c/setuptools-40.2.0.zip"
+    sha256 "47881d54ede4da9c15273bac65f9340f8929d4f0213193fa7894be384f2dcfa6"
   end
 
   resource "alabaster" do
@@ -35,8 +36,8 @@ class SphinxDoc < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/4d/9c/46e950a6f4d6b4be571ddcae21e7bc846fcbb88f1de3eff0f6dd0a6be55d/certifi-2018.4.16.tar.gz"
-    sha256 "13e698f54293db9f89122b0581843a782ad0934a4fe0172d2a980ba77fc61bb7"
+    url "https://files.pythonhosted.org/packages/e1/0f/f8d5e939184547b3bdc6128551b831a62832713aa98c2ccdf8c47ecc7f17/certifi-2018.8.24.tar.gz"
+    sha256 "376690d6f16d32f9d1fe8932551d80b23e9d393a8578c5633a2ed39a64861638"
   end
 
   resource "chardet" do
@@ -55,8 +56,8 @@ class SphinxDoc < Formula
   end
 
   resource "imagesize" do
-    url "https://files.pythonhosted.org/packages/c6/3f/1db2da33804e8d7ef3a868b27b7bdc1aae6a4f693f0162d2aeeaf503864f/imagesize-1.0.0.tar.gz"
-    sha256 "5b326e4678b6925158ccc66a9fa3122b6106d7c876ee32d7de6ce59385b96315"
+    url "https://files.pythonhosted.org/packages/41/f5/3cf63735d54aa9974e544aa25858d8f9670ac5b4da51020bbfc6aaade741/imagesize-1.1.0.tar.gz"
+    sha256 "f3832918bc3c66617f92e35f5d70729187676313caa60c187eb0f28b8fe5e3b5"
   end
 
   resource "Jinja2" do
@@ -90,8 +91,8 @@ class SphinxDoc < Formula
   end
 
   resource "python-docs-theme" do
-    url "https://files.pythonhosted.org/packages/9f/6d/5f04061edd1035654ff36396ac36eabc4eea5be7ab973e5f8d12be15ec24/python-docs-theme-2018.2.tar.gz"
-    sha256 "f9a7e0d44af1719f8975f089632c7ce10c6cf85ee6f08028147b993781d0baa7"
+    url "https://files.pythonhosted.org/packages/77/f9/8c63766fe271549db3a578b652dea6678b90b593300315507b9c922f7173/python-docs-theme-2018.7.tar.gz"
+    sha256 "018a5bf2a7318c9c9a8346303dac8afc6bc212d92e86561c9b95a3372714155a"
   end
 
   resource "pytz" do
@@ -120,8 +121,8 @@ class SphinxDoc < Formula
   end
 
   resource "typing" do
-    url "https://files.pythonhosted.org/packages/ec/cc/28444132a25c113149cec54618abc909596f0b272a74c55bab9593f8876c/typing-3.6.4.tar.gz"
-    sha256 "d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2"
+    url "https://files.pythonhosted.org/packages/bf/9b/2bf84e841575b633d8d91ad923e198a415e3901f228715524689495b4317/typing-3.6.6.tar.gz"
+    sha256 "4027c5f6127a6267a435201981ba156de91ad0d1d98e9ddc2aa173453453492d"
   end
 
   resource "urllib3" do

@@ -6,6 +6,7 @@ class Libpst < Formula
 
   bottle do
     cellar :any
+    sha256 "ce0dae8dfd7289abb17a6830e6996171a711f3cd852ed62c7cc0dac43e66741d" => :mojave
     sha256 "f07260d9a5ef17c294acc30f4405d90467110fda3e824b62cc2e2a0b5cb557da" => :high_sierra
     sha256 "bc247e859e53a24a53b99f4e088341dac9c197b96b2c58bd0953baab39b8c4f8" => :sierra
     sha256 "154c2402a1949c8bcd7b784181b9f1d47705b035ea996506f6d142c3c92e2423" => :el_capitan
@@ -16,12 +17,12 @@ class Libpst < Formula
   deprecated_option "pst2dii" => "with-pst2dii"
   deprecated_option "with-python" => "with-python@2"
 
-  depends_on "python@2" => :optional
   depends_on "pkg-config" => :build
-  depends_on "gd" if build.with? "pst2dii"
   depends_on "boost"
+  depends_on "gd" if build.with? "pst2dii"
   depends_on "gettext"
   depends_on "libgsf"
+  depends_on "python@2" => :optional
   depends_on "boost-python" if build.with? "python@2"
 
   def install

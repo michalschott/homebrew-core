@@ -16,18 +16,19 @@ class Terminator < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "684029ff528fce3fc54d7449574539948d0d53255e3ad7f58ec679af58c2c96e" => :mojave
     sha256 "00e85432871cb5e7df4bcbe8e835cf9ad619f772de9018c41ed781bef4fa6643" => :high_sierra
     sha256 "00e85432871cb5e7df4bcbe8e835cf9ad619f772de9018c41ed781bef4fa6643" => :sierra
     sha256 "00e85432871cb5e7df4bcbe8e835cf9ad619f772de9018c41ed781bef4fa6643" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "intltool" => :build
+  depends_on "pkg-config" => :build
+  depends_on "pango"
+  depends_on "pygobject"
+  depends_on "pygtk"
   depends_on "python@2"
   depends_on "vte"
-  depends_on "pygtk"
-  depends_on "pygobject"
-  depends_on "pango"
 
   def install
     ENV.prepend_create_path "PYTHONPATH", lib/"python2.7/site-packages"

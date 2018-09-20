@@ -9,6 +9,7 @@ class Ghc < Formula
   sha256 "ae47afda985830de8811243255aa3744dfb9207cb980af74393298b2b62160d6"
 
   bottle do
+    sha256 "02efe429ad3b258784afb6c4313f71ff6b9b6210d4ee86594349fb7ecdc6faeb" => :mojave
     sha256 "fcf4fd3d4a75b5b71f6f047cb652820d290ceb55856ee62d63c23746dcfb66ee" => :high_sierra
     sha256 "b488193dbf9877a9a3195d0ada5883b07adc8e537d6576678c096014567d8673" => :sierra
     sha256 "8efdc2390e8379da21a4212730d29d12d168903f945918c5f226783ba4dd3c37" => :el_capitan
@@ -27,14 +28,9 @@ class Ghc < Formula
     end
   end
 
-  option "with-test", "Verify the build using the testsuite"
-  option "without-docs", "Do not build documentation (including man page)"
-  deprecated_option "tests" => "with-test"
-  deprecated_option "with-tests" => "with-test"
-
+  depends_on "python" => :build if build.bottle?
+  depends_on "sphinx-doc" => :build
   depends_on :macos => :lion
-  depends_on "python" => :build if build.bottle? || build.with?("test")
-  depends_on "sphinx-doc" => :build if build.with? "docs"
 
   resource "gmp" do
     url "https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz"
@@ -145,7 +141,7 @@ class Ghc < Formula
     system "./configure", "--prefix=#{prefix}", *args
     system "make"
 
-    if build.bottle? || build.with?("test")
+    if build.bottle?
       resource("testsuite").stage { buildpath.install Dir["*"] }
       cd "testsuite" do
         system "make", "clean"

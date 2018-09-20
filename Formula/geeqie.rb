@@ -12,6 +12,7 @@ class Geeqie < Formula
   revision 1
 
   bottle do
+    sha256 "a559b5497adfaadb9ae785d47abf74f856ee0aa34126325a380565a0ec6836ad" => :mojave
     sha256 "0bf35c40d3d0fc9a3bb6d69cd079e7e3f9aae4d1c050cead01aca59bea009d22" => :high_sierra
     sha256 "54a1af6f886c7a95b3f66ea0996a6acfa1531b940d274921a84cdef57c1fc54f" => :sierra
     sha256 "2f84465d9d6eba2db0031c71033b735d33a6d6294dd2a15fd13d65674b60783b" => :el_capitan
@@ -25,23 +26,23 @@ class Geeqie < Formula
     sha256 "00bad28d46aafaaed99965a5c054bf04679c100c6f4f13ee82cf83c2782de349"
   end
 
-  depends_on "pkg-config" => :build
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "intltool" => :build
-  depends_on "gettext"
-  depends_on "gtk+3"
-  depends_on "gdk-pixbuf"
-  depends_on "pango"
-  depends_on "cairo"
-  depends_on "libtiff"
-  depends_on "jpeg"
-  depends_on "atk"
-  depends_on "glib"
-  depends_on "imagemagick"
-  depends_on "exiv2"
-  depends_on "little-cms2"
+  depends_on "pkg-config" => :build
   depends_on "adwaita-icon-theme"
+  depends_on "atk"
+  depends_on "cairo"
+  depends_on "exiv2"
+  depends_on "gdk-pixbuf"
+  depends_on "gettext"
+  depends_on "glib"
+  depends_on "gtk+3"
+  depends_on "imagemagick"
+  depends_on "jpeg"
+  depends_on "libtiff"
+  depends_on "little-cms2"
+  depends_on "pango"
 
   def install
     ENV["NOCONFIGURE"] = "yes"

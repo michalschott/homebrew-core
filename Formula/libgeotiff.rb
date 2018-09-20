@@ -6,6 +6,7 @@ class Libgeotiff < Formula
   revision 2
 
   bottle do
+    sha256 "820d3dff282f570595d0a0f184434e8a4673d17241bb5746e7c2a64434b66a8b" => :mojave
     sha256 "5e071647442f998e8239426ee2d9dc7ff2131f02adfdd980b4a702c5316e9c78" => :high_sierra
     sha256 "590457da69236c82347ee2037aada01123e835ac2169e9b8b7fe7c944319f31e" => :sierra
     sha256 "590aed30a67b41c1ae71c2b4c93e976bdde6fda6d4dbff698481659ac6b6e32a" => :el_capitan
@@ -14,8 +15,8 @@ class Libgeotiff < Formula
   head do
     url "https://svn.osgeo.org/metacrs/geotiff/trunk/libgeotiff"
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
@@ -62,8 +63,10 @@ class Libgeotiff < Formula
       }
     EOS
 
-    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-ltiff", "-lgeotiff", "-o", "test"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lgeotiff",
+                   "-L#{Formula["libtiff"].opt_lib}", "-ltiff", "-o", "test"
     system "./test", "test.tif"
-    assert_match /GeogInvFlatteningGeoKey.*123.456/, shell_output("#{bin}/listgeo test.tif")
+    output = shell_output("#{bin}/listgeo test.tif")
+    assert_match /GeogInvFlatteningGeoKey.*123.456/, output
   end
 end

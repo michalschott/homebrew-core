@@ -8,19 +8,20 @@ class ConjureUp < Formula
 
   bottle do
     cellar :any
+    sha256 "f979ba47dc174f8ba0c54fe5aef6788218e54b2c47d3e92895af6fb6f61819b8" => :mojave
     sha256 "30f18ecddf24005e85b4f155b6fb1acfae01b71bccd669d505d4946985eb99f1" => :high_sierra
     sha256 "2fac93758693efeedfecf58cda5fff8f2ce2cd6608096d378699792d63e65cc5" => :sierra
     sha256 "4f06009d8c2cc5ae0e58f8f3fb91a340e46b6964c2462463ad362632c51c982d" => :el_capitan
   end
 
-  depends_on "libyaml"
+  depends_on "awscli"
+  depends_on "jq"
   depends_on "juju"
   depends_on "juju-wait"
-  depends_on "jq"
-  depends_on "redis"
-  depends_on "awscli"
+  depends_on "libyaml"
   depends_on "pwgen"
   depends_on "python"
+  depends_on "redis"
 
   # list generated from the 'requirements.txt' file in the repository root
   resource "aiofiles" do

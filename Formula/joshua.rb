@@ -8,6 +8,7 @@ class Joshua < Formula
   bottle do
     cellar :any_skip_relocation
     rebuild 1
+    sha256 "a72914bf2b7fc045e74110fbe593bd2b7a7620161d60b82032b1dac396067280" => :mojave
     sha256 "15cd2defc70734d455c6adda067193905e0debe97c21c551e364bb67a4e5157b" => :high_sierra
     sha256 "7b04fb7031b9f002a418eb7d674d2ceb05be0926c0a7d8abfea644be6d381df4" => :sierra
     sha256 "b649095ea4a944799fbc1ccd8425464b7d2711b0a149049b4d2d5e92d604c5ae" => :el_capitan
@@ -15,11 +16,11 @@ class Joshua < Formula
     sha256 "176fa47a6a2722fb5b6bf1e2efba8da32bab6355f3d844424a817882ed7b3a8e" => :mavericks
   end
 
-  depends_on :java
   depends_on "ant" => :build
   depends_on "boost" => :build
   depends_on "md5sha1sum" => :build
   depends_on "python@2" => :build
+  depends_on :java
 
   def install
     rm Dir["lib/*.{gr,tar.gz}"]

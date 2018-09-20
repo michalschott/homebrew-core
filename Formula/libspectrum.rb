@@ -6,22 +6,23 @@ class Libspectrum < Formula
 
   bottle do
     cellar :any
+    sha256 "3a04dbf9a6c776ad1a80b69019f273456b743af711dc93332e70418fadbc6ed2" => :mojave
     sha256 "585a96b481bea5c5f15c4251134351a0a37fbc458b244514f7917f9451080d5a" => :high_sierra
     sha256 "a2107f7b764dea5b1726e7275f1810019420edaf144c8b451a3b8d70d253f5de" => :sierra
     sha256 "ca3aa9fb750d786bfbf2b9e74c8503d84459eee48b57bbb58a0359f0cff57b0c" => :el_capitan
   end
 
   head do
-    url "https://svn.code.sf.net/p/fuse-emulator/code/trunk/libspectrum"
-    depends_on "automake" => :build
+    url "http://svn.code.sf.net/p/fuse-emulator/code/trunk/libspectrum"
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
   depends_on "pkg-config" => :build
-  depends_on "libgcrypt" => :recommended
-  depends_on "glib" => :recommended
-  depends_on "audiofile" => :recommended
+  depends_on "audiofile"
+  depends_on "glib"
+  depends_on "libgcrypt"
 
   def install
     system "./autogen.sh" if build.head?

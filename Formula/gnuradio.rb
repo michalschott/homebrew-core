@@ -6,6 +6,7 @@ class Gnuradio < Formula
   head "https://github.com/gnuradio/gnuradio.git"
 
   bottle do
+    sha256 "776bf89ad97f91a5dfde51675515b59dc40715130a09039c713a291bc11e4708" => :mojave
     sha256 "bd03698a2b1a89f865eceb8d22eb335ec0b80cc5afb6a03c4c96f71560390e6c" => :high_sierra
     sha256 "8967e3a4fb54a2f0a191d42fefa74066ffc3384290792c325b5d6ce72e1819d5" => :sierra
     sha256 "dc19d373b871c7cf3325e5ff041a5a46aa3fe75cee2c8efa36b33b70bb492b73" => :el_capitan
@@ -16,28 +17,25 @@ class Gnuradio < Formula
   deprecated_option "without-python" => "without-python@2"
 
   depends_on "cmake" => :build
+  depends_on "doxygen" => [:build, :optional] # For documentation
   depends_on "pkg-config" => :build
-  depends_on "python@2" => :recommended
+  depends_on "sphinx-doc" => [:build, :optional] # For documentation
   depends_on "boost"
   depends_on "fftw"
   depends_on "gsl"
   depends_on "zeromq"
+  depends_on "portaudio" => :recommended
+  depends_on "python@2" => :recommended
+  depends_on "uhd" => :recommended
+  depends_on "jack" => :optional
+  depends_on "pygtk" => :optional
+  depends_on "sdl" => :optional
+  depends_on "wxpython" => :optional
 
   if build.with? "python@2"
     depends_on "swig" => :build
     depends_on "numpy"
   end
-
-  # For documentation
-  depends_on "doxygen" => [:build, :optional]
-  depends_on "sphinx-doc" => [:build, :optional]
-
-  depends_on "uhd" => :recommended
-  depends_on "sdl" => :optional
-  depends_on "jack" => :optional
-  depends_on "portaudio" => :recommended
-  depends_on "pygtk" => :optional
-  depends_on "wxpython" => :optional
 
   # cheetah starts here
   resource "Markdown" do

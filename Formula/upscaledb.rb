@@ -18,6 +18,7 @@ class Upscaledb < Formula
 
   bottle do
     cellar :any
+    sha256 "f86a6b8e06fd0536e0739c514d38bd4b273c9c4286da6ecbfa37bc1a88a961f6" => :mojave
     sha256 "2642107106509f9073ffc0ad62f74ab039dacd48be389ea5ff3347dae3a65a5d" => :high_sierra
     sha256 "43f48b9e6ff66ff42b6e83482aae98c463af219cf818976879903ad696a7367f" => :sierra
     sha256 "3ae60c268a06e01345d3ac36e704a9033fd3365cd93369531ec3ac65f0a5583b" => :el_capitan
@@ -26,21 +27,16 @@ class Upscaledb < Formula
   head do
     url "https://github.com/cruppstahl/upscaledb.git"
 
-    depends_on "automake" => :build
     depends_on "autoconf" => :build
+    depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
-  option "without-java", "Do not build the Java wrapper"
-  option "without-protobuf", "Disable access to remote databases"
-
-  deprecated_option "without-remote" => "without-protobuf"
-
   depends_on "boost"
   depends_on "gnutls"
+  depends_on :java
   depends_on "openssl"
-  depends_on :java => :recommended
-  depends_on "protobuf" => :recommended
+  depends_on "protobuf"
 
   resource "libuv" do
     url "https://github.com/libuv/libuv/archive/v0.10.37.tar.gz"
@@ -61,33 +57,20 @@ class Upscaledb < Formula
 
     system "./bootstrap.sh" if build.head?
 
-    args = %W[
-      --disable-debug
-      --disable-dependency-tracking
-      --prefix=#{prefix}
-    ]
-
-    if build.with? "java"
-      args << "JDK=#{ENV["JAVA_HOME"]}"
-    else
-      args << "--disable-java"
+    resource("libuv").stage do
+      system "make", "libuv.dylib", "SO_LDFLAGS=-Wl,-install_name,#{libexec}/libuv/lib/libuv.dylib"
+      (libexec/"libuv/lib").install "libuv.dylib"
+      (libexec/"libuv").install "include"
     end
 
-    if build.with? "protobuf"
-      resource("libuv").stage do
-        system "make", "libuv.dylib", "SO_LDFLAGS=-Wl,-install_name,#{libexec}/libuv/lib/libuv.dylib"
-        (libexec/"libuv/lib").install "libuv.dylib"
-        (libexec/"libuv").install "include"
-      end
+    ENV.prepend "LDFLAGS", "-L#{libexec}/libuv/lib"
+    ENV.prepend "CFLAGS", "-I#{libexec}/libuv/include"
+    ENV.prepend "CPPFLAGS", "-I#{libexec}/libuv/include"
 
-      ENV.prepend "LDFLAGS", "-L#{libexec}/libuv/lib"
-      ENV.prepend "CFLAGS", "-I#{libexec}/libuv/include"
-      ENV.prepend "CPPFLAGS", "-I#{libexec}/libuv/include"
-    else
-      args << "--disable-remote"
-    end
-
-    system "./configure", *args
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "JDK=#{ENV["JAVA_HOME"]}"
     system "make", "install"
 
     pkgshare.install "samples"

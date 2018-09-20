@@ -1,6 +1,6 @@
 class Mame < Formula
   desc "Multiple Arcade Machine Emulator"
-  homepage "http://mamedev.org/"
+  homepage "https://mamedev.org/"
   url "https://github.com/mamedev/mame/archive/mame0199.tar.gz"
   version "0.199"
   sha256 "cf4511d6c893e699fd5bc510133aee75c852942321e1c668c9d5802229bec116"
@@ -13,16 +13,16 @@ class Mame < Formula
     sha256 "77390e4d5a56ee6db55bc26bb633ec0b4540f3227393bafde9628be68a0313ef" => :el_capitan
   end
 
-  depends_on :macos => :yosemite
   depends_on "pkg-config" => :build
   depends_on "sphinx-doc" => :build
-  depends_on "sdl2"
-  depends_on "jpeg"
   depends_on "flac"
+  depends_on "jpeg"
   depends_on "lua"
-  depends_on "sqlite"
-  depends_on "portmidi"
+  depends_on :macos => :yosemite
   depends_on "portaudio"
+  depends_on "portmidi"
+  depends_on "sdl2"
+  depends_on "sqlite"
   depends_on "utf8proc"
 
   # Need C++ compiler and standard library support C++14.

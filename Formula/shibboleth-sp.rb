@@ -3,27 +3,28 @@ class ShibbolethSp < Formula
   homepage "https://wiki.shibboleth.net/confluence/display/SHIB2"
   url "https://shibboleth.net/downloads/service-provider/3.0.2/shibboleth-sp-3.0.2.tar.bz2"
   sha256 "7aab399aeaf39145c60e1713dbc29a65f618e9eca84505f5ed03cee63e3f31a3"
+  revision 2
 
   bottle do
-    sha256 "ea68592d27b642e356112d9f41ed43a449e8c206628ccdffffdead4742ac30bd" => :high_sierra
-    sha256 "95f5e6ea5ad8195d0013f419280c262cc9a8d10b5470962347dc6e62c0d2dd30" => :sierra
-    sha256 "ac57fa26bc3e53d7fa7640b3ed437148a6fb47648afdc7fb402e43de1d4fd7c2" => :el_capitan
+    sha256 "cfa12a8f9c4c972451927b7aec45dc0e9409773ba8c81307a2dba9dcb1b4e772" => :mojave
+    sha256 "8a541caff18ccbde586b7a699e233b738a688cdb22dbd8c940ce4fc544393f81" => :high_sierra
+    sha256 "4476bda34101304e690b5e7c98df4ef5e5cbb31d30c4043329d27e18900cc430" => :sierra
+    sha256 "c8d4e77021c1b2b576df886d36d930aedc025d1918de55dcc33276847489a5d7" => :el_capitan
   end
 
+  depends_on "apr" => :build
+  depends_on "apr-util" => :build
   depends_on "pkg-config" => :build
-  depends_on :macos => :yosemite
-  depends_on "curl" => "with-openssl"
+  depends_on "boost"
   depends_on "httpd" if MacOS.version >= :high_sierra
+  depends_on "log4shib"
+  depends_on :macos => :yosemite
   depends_on "opensaml"
-  depends_on "xml-tooling-c"
+  depends_on "openssl"
+  depends_on "unixodbc"
   depends_on "xerces-c"
   depends_on "xml-security-c"
-  depends_on "log4shib"
-  depends_on "boost"
-  depends_on "unixodbc"
-
-  depends_on "apr-util" => :build
-  depends_on "apr" => :build
+  depends_on "xml-tooling-c"
 
   needs :cxx11
 

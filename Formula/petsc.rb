@@ -1,13 +1,15 @@
 class Petsc < Formula
-  desc "Portable, Extensible Toolkit for Scientific Computation"
+  desc "Portable, Extensible Toolkit for Scientific Computation (real)"
   homepage "https://www.mcs.anl.gov/petsc/"
   url "http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.9.3.tar.gz"
   sha256 "8828fe1221f038d78a8eee3325cdb22ad1055a2f0671871815ee9f47365f93bb"
 
   bottle do
-    sha256 "733080c80cec9ad2c7da2fb5d922f94889421779eac6c291c9a62152f333fb6b" => :high_sierra
-    sha256 "e8858a1cec95cc42417773aac1b7e85db1c4938e149f7b27a20ad739a51cb395" => :sierra
-    sha256 "4b8ddec36720b2778df1fcdcf765bcf7a847abbeec6a7df9f09067b4ca4fb505" => :el_capitan
+    rebuild 1
+    sha256 "b03109bfbe4896ef2326797e7726bb7cf4c9514a4ca0aef209f31dd3983e852d" => :mojave
+    sha256 "a8f87b8dfda728cb297bb27b18d2238d50f6774086e9170698913597abfe80d7" => :high_sierra
+    sha256 "6366422eb66c5b6d100fbfcb69e657f5f3b74807345c052e0a4a5d601ef27f60" => :sierra
+    sha256 "d1e6494ab696ef49852a59e1e8e4e81a90f06da95ba8dfbf05662372580e7c53" => :el_capitan
   end
 
   depends_on "hdf5"
@@ -17,6 +19,8 @@ class Petsc < Formula
   depends_on "open-mpi"
   depends_on "scalapack"
   depends_on "suite-sparse"
+
+  conflicts_with "petsc-complex", :because => "petsc must be installed with either real or complex support, not both"
 
   def install
     ENV["CC"] = "mpicc"

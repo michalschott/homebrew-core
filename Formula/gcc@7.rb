@@ -6,9 +6,11 @@ class GccAT7 < Formula
   sha256 "832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 
   bottle do
-    sha256 "45cfaae98c9e82d6eb90449a541019c7b5f10c20e0221acc3b1a9b6fe48f5f39" => :high_sierra
-    sha256 "5875cde355e4e7611ccd58c3ab4c35ab27740bca99e37de59081953111de4ce0" => :sierra
-    sha256 "d38130e28eaf1d76e29f09deb616a5a1063dad898a2856879d93a67f51573ef6" => :el_capitan
+    rebuild 2
+    sha256 "3104d5deacc8ae3d55b06ba3c136fc8c169a0900b89f0fdebb39b9e414e5c4f1" => :mojave
+    sha256 "ef426133228689c2db55b41bcf0f426b17ca0f88ee07df8093dd365feff733c4" => :high_sierra
+    sha256 "965dfc7b6d640f7bdb04d9918a3372781af67df86ad6a8c553a8e1c9ba460bbc" => :sierra
+    sha256 "c58a2425c823986c8107ec1f4eb03a70395697690a8828df04b7ea1c9d779548" => :el_capitan
   end
 
   option "with-jit", "Build just-in-time compiler"
@@ -48,6 +50,10 @@ class GccAT7 < Formula
       sha256 "f7772a6ba73f44a6b378e4fe3548e0284f48ae2d02c701df1be93780c1607074"
     end
   end
+
+  # isl 0.20 compatibility
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=86724
+  patch :DATA
 
   def install
     # GCC will suffer build errors if forced to use a particular linker.
@@ -91,16 +97,22 @@ class GccAT7 < Formula
     args << "--disable-nls" if build.without? "nls"
     args << "--enable-host-shared" if build.with?("jit")
 
+    # Xcode 10 dropped 32-bit support
+    args << "--disable-multilib" if DevelopmentTools.clang_build_version >= 1000
+
     # Ensure correct install names when linking against libgcc_s;
     # see discussion in https://github.com/Homebrew/homebrew/pull/34303
     inreplace "libgcc/config/t-slibgcc-darwin", "@shlib_slibdir@", "#{HOMEBREW_PREFIX}/lib/gcc/#{version_suffix}"
 
     mkdir "build" do
-      unless MacOS::CLT.installed?
-        # For Xcode-only systems, we need to tell the sysroot path.
-        # "native-system-headers" will be appended
+      if !MacOS::CLT.installed?
+        # For Xcode-only systems, we need to tell the sysroot path
         args << "--with-native-system-header-dir=/usr/include"
         args << "--with-sysroot=#{MacOS.sdk_path}"
+      elsif MacOS.version >= :mojave
+        # System headers are no longer located in /usr/include
+        args << "--with-native-system-header-dir=/usr/include"
+        args << "--with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
       end
 
       system "../configure", *args
@@ -169,3 +181,17 @@ class GccAT7 < Formula
     assert_equal "Done\n", `./test`
   end
 end
+
+__END__
+diff --git a/gcc/graphite.h b/gcc/graphite.h
+index 578fa1a..e4fad06 100644
+--- a/gcc/graphite.h
++++ b/gcc/graphite.h
+@@ -37,6 +37,8 @@ along with GCC; see the file COPYING3.  If not see
+ #include <isl/schedule.h>
+ #include <isl/ast_build.h>
+ #include <isl/schedule_node.h>
++#include <isl/id.h>
++#include <isl/space.h>
+
+ typedef struct poly_dr *poly_dr_p;

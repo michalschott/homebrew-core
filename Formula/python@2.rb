@@ -7,10 +7,11 @@ class PythonAT2 < Formula
   head "https://github.com/python/cpython.git", :branch => "2.7"
 
   bottle do
-    rebuild 1
-    sha256 "3a2d38bf7b65da1813753a618aa0781cdc753380056e33b81decb21a75fde3d8" => :high_sierra
-    sha256 "437054bac1266ae143ed1569dffbd3f8f4d88bd8b21780eec88e837d51d3cd57" => :sierra
-    sha256 "a1dcdc5031324e2f35b6fa4ca5f07e36faa60e92306bf472527bc0d671c66ce0" => :el_capitan
+    rebuild 5
+    sha256 "4aa5c31e71e19a65c236ffbd5878ae3417c2cacbf5a840ee88959316b34e14bb" => :mojave
+    sha256 "92dcc8001f90881672303657b2f9b91dfe507fd0acaeb9eed6ba86a05956b824" => :high_sierra
+    sha256 "0dd17b0452b3bd2184a7ba38f4031407983504e1d0fcaae3d7d6dcc5fb770162" => :sierra
+    sha256 "8d95cd5b29ce8cffc0019c4ceab5e3a0bcf115359d91ca4c28e2cb7854fcaff5" => :el_capitan
   end
 
   # Please don't add a wide/ucs4 option as it won't be accepted.
@@ -28,8 +29,8 @@ class PythonAT2 < Formula
   depends_on "tcl-tk" => :optional
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/d3/3e/1d74cdcb393b68ab9ee18d78c11ae6df8447099f55fe86ee842f9c5b166c/setuptools-40.0.0.zip"
-    sha256 "012adb8e25fbfd64c652e99e7bab58799a3aaf05d39ab38561f69190a909015f"
+    url "https://files.pythonhosted.org/packages/c3/a8/a497f2f220fd51a714d0a466a32b8ec7d71dafbb053cb490a427b5fa2a1c/setuptools-40.4.1.zip"
+    sha256 "0565104c1fdc39cc28bcd8131e9d5af9eac6040168933a969f152a247ef59d11"
   end
 
   resource "pip" do
@@ -105,14 +106,16 @@ class PythonAT2 < Formula
     ldflags  = []
     cppflags = []
 
-    unless MacOS::CLT.installed?
-      # Help Python's build system (setuptools/pip) to build things on Xcode-only systems
+    if MacOS.sdk_path_if_needed
+      # Help Python's build system (setuptools/pip) to build things on SDK-based systems
       # The setup.py looks at "-isysroot" to get the sysroot (and not at --sysroot)
-      cflags   << "-isysroot #{MacOS.sdk_path}"
-      ldflags  << "-isysroot #{MacOS.sdk_path}"
-      cppflags << "-I#{MacOS.sdk_path}/usr/include" # find zlib
+      cflags  << "-isysroot #{MacOS.sdk_path}"
+      ldflags << "-isysroot #{MacOS.sdk_path}"
+      cflags  << "-I/usr/include" # find zlib
       # For the Xlib.h, Python needs this header dir with the system Tk
       if build.without? "tcl-tk"
+        # Yep, this needs the absolute path where zlib needed
+        # a path relative to the SDK.
         cflags << "-I#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Versions/8.5/Headers"
       end
     end
